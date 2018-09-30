@@ -7,7 +7,9 @@
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "build-library": "vue-cli-service build --target lib --name vue-dc ./src/lib.js"
+    "build-library": "vue-cli-service build --target lib --name vue-dc ./src/lib.js",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "files": [
     "src/*"
@@ -30,6 +32,7 @@
     "d3-random": "^1.1.2",
     "d3-scale": "^2.1.2",
     "d3-shape": "^1.2.2",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "vuepress": "^0.14.4"
   }
 }
