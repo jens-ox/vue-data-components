@@ -1,28 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <multiline-graph :width="width" :height="height"></multiline-graph>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MultilineGraph from './components/examples/MultilineGraph'
 
 export default {
   name: 'app',
+  data () {
+    return {
+      windowWidth: 0
+    }
+  },
+  beforeMount () {
+    this.windowWidth = window.innerWidth
+    this.$nextTick(() => {
+      window.addEventListener('resize', () => {
+        this.windowWidth = window.innerWidth
+      })
+    })
+  },
+  computed: {
+    width: function () {
+      return this.windowWidth > 800 ? 800 : this.windowWidth - 16
+    },
+    height: function () {
+      return 0.618 * this.width
+    }
+  },
   components: {
-    HelloWorld
+    MultilineGraph
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
