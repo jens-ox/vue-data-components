@@ -1,36 +1,20 @@
-# vue-data-components
+# Vue Data Components
 
-## Project setup
-```
-npm install
-```
+Components-based library for creating data visualizations, e.g. charts. Heavily inspired by [vx](https://github.com/hshoff/vx) and [data-ui](https://github.com/williaster/data-ui).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Please note that this library is in early development.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Documentation
 
-### Run your tests
-```
-npm run test
+See [here](https://jens-ox.github.io/vue-data-components/).
+
+## Development setup
+
+```bash
+git clone https://github.com/jens-ox/vue-data-components
+cd vue-data-components
+yarn
+yarn serve
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
+See `package.json` for additional details.
