@@ -5,6 +5,9 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
+# Docs
+/docs/.vuepress/dist
+
 # local env files
 .env.local
 .env.*.local
