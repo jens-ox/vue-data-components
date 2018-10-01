@@ -6,10 +6,10 @@
     xLabel="Time" yLabel="€ per sec"
   >
     <!-- lines -->
-    <line-path
+    <line-sequence
       v-for="(d, i) in series"
       :key="`lines-${i}`"
-      :data="d"
+      :sequence="d"
       :x="x" :y="y"
       :xScale="xScale" :yScale="yScale"
       :pathStyle="{}"
@@ -20,7 +20,7 @@
     />
 
     <!-- voronoi paths -->
-    <multiline-voronoi
+    <multi-sequence-voronoi
       :series="series"
       :x="x" :y="y"
       :xScale="xScale" :yScale="yScale"
@@ -31,10 +31,10 @@
 </template>
 <script>
 import { CartesianGraph } from '../graph'
-import { LinePath } from '../shape'
+import { LineSequence } from '../primitive'
 import { genDateValue } from '../mock-data'
 import { scaleTime, scaleLinear } from '../scale'
-import { MultilineVoronoi } from '../voronoi'
+import { MultiSequenceVoronoi } from '../voronoi'
 import { extent, max, merge } from 'd3-array'
 
 export default {
@@ -88,7 +88,7 @@ export default {
     outHandler () { this.activeSeries = -1 }
   },
   components: {
-    CartesianGraph, LinePath, MultilineVoronoi
+    CartesianGraph, LineSequence, MultiSequenceVoronoi
   }
 }
 </script>
