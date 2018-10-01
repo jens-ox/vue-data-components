@@ -68,6 +68,7 @@
         :innerWidth="width - margin.right - margin.left"
         :innerHeight="height - margin.top - margin.bottom"
         :hoverHandler="hoverHandler"
+        :outHandler="outHandler"
       />
     </group>
   </svg>
@@ -142,6 +143,9 @@ export default {
     y (d) { return d.value },
     hoverHandler (point) {
       this.activeSeries = point.indexSeries
+    },
+    outHandler () {
+      this.activeSeries = -1
     }
   },
   components: {

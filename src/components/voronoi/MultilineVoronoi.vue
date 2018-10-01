@@ -1,5 +1,7 @@
 <template>
-  <group>
+  <group
+    v-on:mouseleave.native="voronoiOutHandler()"
+  >
     <path
       v-for="(polygon, i) in voronoiPolygons"
       :key="`polygon-${i}`"
@@ -46,7 +48,8 @@ export default {
       required: true
     },
     hoverHandler: Function,
-    clickHandler: Function
+    clickHandler: Function,
+    outHandler: Function
   },
   computed: {
     data () {
@@ -99,6 +102,10 @@ export default {
      */
     voronoiHoverHandler (offset) {
       if (this.hoverHandler) this.hoverHandler(this.data[offset])
+    },
+
+    voronoiOutHandler () {
+      if (this.outHandler) this.outHandler()
     }
   },
   components: {
