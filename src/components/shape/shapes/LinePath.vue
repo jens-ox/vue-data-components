@@ -34,6 +34,11 @@ export default {
       default: () => {}
     },
     isActive: Boolean,
+    isInactive: Boolean,
+    inactiveStyle: {
+      type: Object,
+      default: () => {}
+    },
     curve: {
       type: Function,
       default: curveLinear
@@ -41,7 +46,13 @@ export default {
   },
   computed: {
     computedPathStyle () {
-      return this.isActive ? { ...this.pathStyle, ...this.activeStyle } : this.pathStyle
+      if (this.isActive) {
+        return { ...this.pathStyle, ...this.activeStyle }
+      }
+      if (this.isInactive) {
+        return { ...this.pathStyle, ...this.inactiveStyle }
+      }
+      return this.pathStyle
     }
   },
   methods: {

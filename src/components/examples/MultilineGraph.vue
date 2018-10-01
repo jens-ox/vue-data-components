@@ -56,6 +56,10 @@
           stroke: 'red',
           strokeWidth: 2
         }"
+        :isInactive="activeSeries !== -1 && activeSeries !== i"
+        :inactiveStyle="{
+          stroke: 'rgba(0,0,0,0.2)'
+        }"
       />
 
       <!-- voronoi paths -->
