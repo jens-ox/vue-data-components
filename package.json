@@ -1,6 +1,7 @@
 {
   "name": "vue-data-components",
   "version": "0.1.0",
+  "main": "src/lib.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
