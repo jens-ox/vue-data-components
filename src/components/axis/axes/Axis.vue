@@ -182,6 +182,7 @@ export default {
         'font-family': 'Arial',
         'font-size': 12,
         'fill': 'black',
+        'font-weight': 'bold',
         ...this.labelProps
       }
       const sign = this.orientation === ORIENT.left || this.orientation === ORIENT.top ? -1 : 1
