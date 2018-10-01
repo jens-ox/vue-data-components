@@ -1,11 +1,14 @@
 <template>
   <div id="app">
     <multiline-graph :width="width" :height="height" />
+    <br><br>
+    <multipoint-graph :width="width" :height="height" />
   </div>
 </template>
 
 <script>
 import MultilineGraph from './components/examples/MultilineGraph'
+import MultipointGraph from './components/examples/MultipointGraph'
 
 export default {
   name: 'app',
@@ -31,7 +34,7 @@ export default {
     }
   },
   components: {
-    MultilineGraph
+    MultilineGraph, MultipointGraph
   }
 }
 </script>
