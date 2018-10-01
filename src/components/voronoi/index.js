@@ -1,1 +1,1 @@
-export { default as MultilineVoronoi } from './MultilineVoronoi'
+export { default as MultiSequenceVoronoi } from './MultiSequenceVoronoi'
