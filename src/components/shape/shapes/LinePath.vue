@@ -15,6 +15,15 @@ import { line } from 'd3-shape'
 import { curveLinear } from '../../curve'
 
 export default {
+  data () {
+    return {
+      defaultStyle: {
+        fill: 'none',
+        stroke: 'rgba(0,0,0,0.5)',
+        strokeWidth: 1
+      }
+    }
+  },
   props: {
     xScale: Function,
     yScale: Function,
@@ -46,13 +55,14 @@ export default {
   },
   computed: {
     computedPathStyle () {
+      let style = { ...this.defaultStyle, ...this.pathStyle }
       if (this.isActive) {
-        return { ...this.pathStyle, ...this.activeStyle }
+        return { ...style, ...this.activeStyle }
       }
       if (this.isInactive) {
-        return { ...this.pathStyle, ...this.inactiveStyle }
+        return { ...style, ...this.inactiveStyle }
       }
-      return this.pathStyle
+      return style
     }
   },
   methods: {
