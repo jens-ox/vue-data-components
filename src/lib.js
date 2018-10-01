@@ -1,6 +1,7 @@
 export * from './components/axis'
 export * from './components/curve'
 export * from './components/gradient'
+export * from './components/graph'
 export * from './components/grid'
 export * from './components/group'
 export * from './components/mock-data'
