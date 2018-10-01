@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <multiline-graph :width="width" :height="height"></multiline-graph>
+    <multiline-graph :width="width" :height="height" />
   </div>
 </template>
 
