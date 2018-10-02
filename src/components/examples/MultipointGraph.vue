@@ -11,6 +11,7 @@
       :key="`points-${i}`"
       :points="d"
       :x="x" :y="y"
+      :r="() => 4"
       :xScale="xScale" :yScale="yScale"
       :isActive="i === activeSeries"
       :activePoint="activePoint"

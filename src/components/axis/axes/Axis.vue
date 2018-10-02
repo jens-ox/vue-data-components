@@ -40,7 +40,7 @@
 </template>
 <script>
 import { LineShape } from '../../shape'
-import { Point } from '../../point'
+import { AbstractPoint as Point } from '../../point'
 import { Group } from '../../group'
 import center from '../utils/center'
 import ORIENT from '../constants/orientation'

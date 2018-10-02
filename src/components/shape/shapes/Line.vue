@@ -14,7 +14,7 @@
   />
 </template>
 <script>
-import { Point } from '../../point'
+import { AbstractPoint as Point } from '../../point'
 
 export default {
   props: {
