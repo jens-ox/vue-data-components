@@ -17,18 +17,18 @@
         :top="margin.top"
         :left="margin.left"
         :scale="yScale"
-        hideZero
+        :hideZero="yHideZero"
         :numTicks="yTicks || yTickCount"
-        :labelOffset="40"
+        :labelOffset="yLabelOffset"
         :label="yLabel"
       />
       <axis-right v-if="!yHideAxis && yRight"
         :top="margin.top"
         :left="width - margin.right"
         :scale="yScale"
-        hideZero
+        :hideZero="xHideZero"
         :numTicks="yTicks || yTickCount"
-        :labelOffset="40"
+        :labelOffset="xLabelOffset"
         :label="yLabel"
       />
 
@@ -141,6 +141,22 @@ export default {
     yRight: {
       type: Boolean,
       default: false
+    },
+    xHideZero: {
+      type: Boolean,
+      default: false
+    },
+    yHideZero: {
+      type: Boolean,
+      default: false
+    },
+    xLabelOffset: {
+      type: Number,
+      default: 40
+    },
+    yLabelOffset: {
+      type: Number,
+      default: 40
     }
   },
   computed: {
