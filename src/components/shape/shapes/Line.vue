@@ -1,7 +1,6 @@
 <template>
   <line
-    :ref={innerRef}
-    :class="`vx-line ${className}`"
+    class="vdc-line"
     :x1="from.x"
     :y1="from.y"
     :x2="to.x"
@@ -18,7 +17,6 @@ import { AbstractPoint as Point } from '../../point'
 
 export default {
   props: {
-    innerRef: Function,
     from: {
       type: Object,
       default: new Point({ x: 0, y: 0 })
@@ -40,10 +38,6 @@ export default {
       default: ''
     },
     transform: {
-      type: String,
-      default: ''
-    },
-    className: {
       type: String,
       default: ''
     },

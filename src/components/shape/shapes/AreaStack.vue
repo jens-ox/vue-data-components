@@ -3,12 +3,12 @@
     <path
       v-for="(series, i) in seriesData"
       v-bind:key="`area-stack-${i}-${series.key || ''}`"
-      :class="`vx-area-stack ${className}`"
+      class="`vdc-area-stack"
       :d="path(series)"
       v-bind="restProps"
     />
     <g
-      v-if="!!glyph" className="vx-area-stack-glyphs"
+      v-if="!!glyph" class="vdc-area-stack-glyphs"
       :transform="`translate(${left}, ${top})`"
     >{{ data.map(glyph) }}</g>
   </g>
@@ -18,10 +18,6 @@ import { area, stack as d3stack } from 'd3-shape'
 
 export default {
   props: {
-    className: {
-      type: String,
-      default: ''
-    },
     top: {
       type: Number,
       default: 0

@@ -1,5 +1,5 @@
 <template>
-  <Group :className="`vx-bar-group ${className}`" :top="top" :left="left">
+  <Group :top="top" :left="left">
     <Group v-if="data"
       v-for="(d, i) in data"
       v-bind:key="`bar-group-${i}-${x0(d)}`"
@@ -63,10 +63,6 @@ export default {
     height: {
       type: Number,
       required: true
-    },
-    className: {
-      type: String,
-      default: ''
     },
     top: Number,
     left: Number,

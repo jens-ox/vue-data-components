@@ -1,7 +1,6 @@
 <template>
   <path
-    :ref="innerRef"
-    :class="`vx-link-vertical ${className}`"
+    class="vdc-link-vertical"
     :d="computedPath"
     v-bind="data"
   />
@@ -11,11 +10,6 @@ import { linkVertical } from 'd3-shape'
 
 export default {
   props: {
-    className: {
-      type: String,
-      default: ''
-    },
-    innerRef: Function,
     data: Object,
     x: {
       type: Function,

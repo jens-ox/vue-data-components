@@ -1,14 +1,10 @@
 <template>
   <Axis
-    :axisClassName="`vx-axis-left ${axisClassName}`"
     :orientation="ORIENT.left"
-
-    :axisLineClassName="axisLineClassName"
     :hideAxisLine="hideAxisLine"
     :hideTicks="hideTicks"
     :hideZero="hideZero"
     :label="label"
-    :labelClassName="labelClassName"
     :labelOffset="labelOffset"
     :labelProps="labelProps"
     :left="left"
@@ -18,7 +14,6 @@
     :stroke="stroke"
     :strokeWidth="strokeWidth"
     :strokeDasharray="strokeDasharray"
-    :tickClassName="tickClassName"
     :tickFormat="tickFormat"
     :tickLabelProps="Object.assign({}, {
       'text-anchor': 'end',

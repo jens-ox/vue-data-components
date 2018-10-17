@@ -1,12 +1,11 @@
 <template>
-  <Group :className="`vx-axis ${axisClassName}`" :top="top" :left="left">
+  <Group :top="top" :left="left">
 
     <!-- ticks -->
     <Group
       v-for="(val, index) in values"
       v-if="!hideZero || val > 0"
       v-bind:key="`vx-tick-${val}-${index}`"
-      :className="`vx-axis-tick ${tickClassName}`"
       :transform="tickTransform"
     >
 
@@ -20,7 +19,6 @@
     <!-- axis line -->
     <LineShape
       v-if="!hideAxisLine"
-      :className="`vx-axis-line ${axisLineClassName}`"
       :from="axisFromPoint"
       :to="axisToPoint"
       :stroke="stroke"
@@ -31,7 +29,7 @@
     <!-- axis label -->
     <text
       v-if="label"
-      :class="`vx-axis-label ${labelClassName}`"
+      class="vdc-axis-label"
       v-bind="labelTransform"
     >
       {{ label }}
@@ -47,14 +45,6 @@ import ORIENT from '../constants/orientation'
 
 export default {
   props: {
-    axisClassName: {
-      type: String,
-      default: ''
-    },
-    axisLineClassName: {
-      type: String,
-      default: ''
-    },
     hideAxisLine: {
       type: Boolean,
       default: false
@@ -68,10 +58,6 @@ export default {
       default: false
     },
     label: {
-      type: String,
-      default: ''
-    },
-    labelClassName: {
       type: String,
       default: ''
     },
@@ -112,10 +98,6 @@ export default {
       default: 1
     },
     strokeDasharray: String,
-    tickClassName: {
-      type: String,
-      default: ''
-    },
     tickFormat: Function,
     tickLabelProps: {
       type: Object,

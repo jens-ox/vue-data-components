@@ -1,8 +1,7 @@
 <template>
   <g>
     <path
-      :ref="innerRef"
-      :class="`vx-line-radial ${className}`"
+      class="vdc-line-radial"
       :d="path(data)"
       :fill="fill"
       :stroke="stroke"
@@ -19,11 +18,6 @@ import { curveBasisOpen } from '../../curve'
 
 export default {
   props: {
-    innerRef: Function,
-    className: {
-      type: String,
-      default: ''
-    },
     angle: Function,
     radius: Function,
     defined: Boolean,

@@ -4,8 +4,7 @@
   </Group>
   <Group v-else>
     <path
-      :ref="innerRef"
-      :class="`vx-area ${className}`"
+      class="vdc-area"
       :d="path(data)"
       :style="pathStyle"
     />
@@ -33,8 +32,6 @@ export default {
       type: Function,
       default: () => true
     },
-    className: [String, Boolean, Object, Array],
-    innerRef: Function,
     pathStyle: {
       type: Object,
       default: () => {

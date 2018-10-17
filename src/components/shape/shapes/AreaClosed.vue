@@ -1,8 +1,7 @@
 <template>
   <g>
     <path
-      :ref={innerRef}
-      :className="`vx-area-closed ${className}`"
+      class="vdc-area-closed"
       :d="path(data)"
       :stroke="stroke"
       :stroke-width="strokeWidth"
@@ -37,10 +36,6 @@ export default {
       type: Function,
       default: () => true
     },
-    className: {
-      type: String,
-      default: ''
-    },
     strokeDasharray: String,
     strokeWidth: {
       type: Number,
@@ -58,7 +53,6 @@ export default {
       type: Function,
       default: curveLinear
     },
-    innerRef: Function,
     restProps: Object
   },
   methods: {

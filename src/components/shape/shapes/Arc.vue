@@ -1,15 +1,11 @@
 <template>
-  <path :class="`vx-arc ${className}`" :d="arc(data)" :style="pathStyle" />
+  <path class="vdc-arc" :d="arc(data)" :style="pathStyle" />
 </template>
 <script>
 import { arc as d3Arc } from 'd3-shape'
 
 export default {
   props: {
-    className: {
-      type: String,
-      default: ''
-    },
     data: Object,
     centroid: Object,
     innerRadius: Number,

@@ -1,5 +1,5 @@
 <template>
-  <Group :class="`vx-columns ${className}`" :top="top" :left="left">
+  <Group :top="top" :left="left">
     <LineShape v-for="(d, i) in ticks"
       v-bind:key="`column-line-${d}-${i}`"
       :from="fromPoint(x(d))"
@@ -38,10 +38,6 @@ export default {
       default: 1
     },
     strokeDasharray: String,
-    className: {
-      type: String,
-      default: ''
-    },
     numTicks: {
       type: Number,
       default: 10

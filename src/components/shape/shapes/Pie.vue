@@ -1,5 +1,5 @@
 <template>
-  <Group className="vx-pie-arcs-group" :top="top" :left="left">
+  <Group :top="top" :left="left">
       <g v-for="(arc, i) in arcs"
         :key="`pie-arc-${i}`"
       >
@@ -24,10 +24,6 @@ import { arc as d3Arc, pie as d3Pie } from 'd3-shape'
 
 export default {
   props: {
-    className: {
-      type: String,
-      default: ''
-    },
     top: {
       type: Number,
       default: 0
@@ -89,7 +85,6 @@ export default {
       return {
         arcs: this.arcs,
         generatePathProps: (arc, index) => ({
-          class: `vx-pie-arc ${this.className}`,
           d: this.path(arc),
           'outer-radius': this.outerRadius,
           'inner-radius': this.innerRadius,

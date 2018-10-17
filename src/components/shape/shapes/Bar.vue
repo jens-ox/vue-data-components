@@ -1,6 +1,6 @@
 <template>
   <rect
-    :class="`vx-bar ${className}`"
+    class="vdc-bar"
     :x="x"
     :y="y"
     :width="width"
@@ -13,10 +13,6 @@
 <script>
 export default {
   props: {
-    className: {
-      type: String,
-      default: ''
-    },
     x: {
       type: Number,
       default: 0

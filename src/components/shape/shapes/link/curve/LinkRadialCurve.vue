@@ -1,7 +1,6 @@
 <template>
   <path
-    :ref="innerRef"
-    :class="`vx-link ${className}`"
+    class="vdc-link"
     :d="computedPath(data)"
     v-bind="data"
   />
@@ -11,11 +10,6 @@ import { path as d3Path } from 'd3-path'
 
 export default {
   props: {
-    innerRef: Function,
-    className: {
-      type: String,
-      default: ''
-    },
     data: Array,
     path: Function,
     x: {

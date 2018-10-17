@@ -1,7 +1,6 @@
 <template>
   <path
-    :ref="innerRef"
-    :class="`vx-link-radius ${className}`"
+    class="vdc-link-radius"
     :d="computedPath(data)"
     v-bind="data"
   />
@@ -11,7 +10,6 @@ import { linkRadial } from 'd3-shape'
 
 export default {
   props: {
-    innerRef: Function,
     angle: {
       type: Function,
       default: d => d.x
@@ -29,11 +27,7 @@ export default {
       default: d => d.target
     },
     data: Array,
-    path: Function,
-    className: {
-      type: String,
-      default: ''
-    }
+    path: Function
   },
   computed: {
     pathRadialDiagonal () {

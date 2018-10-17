@@ -1,6 +1,5 @@
 <template>
   <Group
-    :className="`vx-bar-stack ${className}`"
     :top="top"
     :left="left"
   >
@@ -66,10 +65,6 @@ export default {
     keys: {
       type: Array,
       required: true
-    },
-    className: {
-      type: String,
-      default: ''
     },
     top: Number,
     left: Number,

@@ -17,11 +17,7 @@ export default {
       type: Number,
       default: 0
     },
-    transform: String,
-    className: {
-      type: String,
-      default: ''
-    }
+    transform: String
   }
 }
 </script>
