@@ -2,24 +2,41 @@
 home: true
 actionText: Get Started →
 actionLink: /guide/
-features:
-- title: Simplicity First
-  details: Minimal setup with markdown-centered project structure helps you focus on writing.
-- title: Vue-Powered
-  details: Enjoy the dev experience of Vue + webpack, use Vue components in markdown, and develop custom themes with Vue.
-- title: Performant
-  details: VuePress generates pre-rendered static HTML for each page, and runs as an SPA once a page is loaded.
-footer: MIT Licensed | Copyright © 2018-present Evan You
+footer: Copyright © 2018-present Jens Ochsenmeier
 ---
+<div style="text-align: center">
+  <div style="display: inline-block; margin: 0 auto; background-color: #F9F7E8; border-radius: 1em; box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2); padding: 1em; margin: 1em">
+    <MultilineGraph :width="width" :height="height" />
+  </div>
+</div>
 
-# Vue Data Components
+<script>
+  import MultilineGraph from '../src/components/examples/MultilineGraph.vue'
 
-blabla
-
-## balba
-
-lsaksd
-
-## asldads
-
-asljdasdkfhjaf
+  export default {
+    data () {
+      return {
+        windowWidth: 0
+      }
+    },
+    beforeMount () {
+      this.windowWidth = window.innerWidth
+      this.$nextTick(() => {
+        window.addEventListener('resize', () => {
+          this.windowWidth = window.innerWidth
+        })
+      })
+    },
+    computed: {
+      width: function () {
+        return this.windowWidth > 800 ? 800 : this.windowWidth - 16
+      },
+      height: function () {
+        return 0.618 * this.width
+      }
+    },
+    components: {
+      MultilineGraph
+    }
+  }
+</script>
