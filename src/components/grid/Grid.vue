@@ -1,75 +1,61 @@
 <template>
   <Group class="vx-grid" :top="top" :left="left">
-    <Rows v-if="!hideXLines"
+    <grid-lines v-if="!hideHorizontalLines"
+      type="horizontal"
       :scale="yScale"
       :width="width"
-      :stroke="stroke"
-      :stroke-width="strokeWidth"
-      :stroke-opacity="strokeOpacity"
-      :stroke-dasharray="strokeDasharray"
-      :numTicks="numTicksRows"
-      :style="rowLineStyle"
+      :lineStyle="computedHorizontalLineStyle"
+      :numTicks="numTicksHorizontal"
       :offset="yOffset"
     />
-    <Columns v-if="!hideYLines"
+    <grid-lines v-if="!hideVerticalLines"
+      type="vertical"
       :scale="xScale"
       :height="height"
-      :stroke="stroke"
-      :stroke-width="strokeWidth"
-      :stroke-opacity="strokeOpacity"
-      :stroke-dasharray="strokeDasharray"
-      :numTicks="numTicksColumns"
-      :style="columnLineStyle"
+      :lineStyle="computedVerticalLineStyle"
+      :numTicks="numTicksVertical"
       :offset="xOffset"
     />
   </Group>
 </template>
 <script>
+import GridLines from './GridLines'
 import { Group } from '../group'
-import Rows from './Rows'
-import Columns from './Columns'
 
 export default {
   props: {
-    hideXLines: {
-      type: Boolean,
-      default: false
-    },
-    hideYLines: {
-      type: Boolean,
-      default: false
-    },
-    top: {
-      type: Number,
-      default: 0
-    },
-    left: {
-      type: Number,
-      default: 0
-    },
+    hideHorizontalLines: { type: Boolean, default: false },
+    hideVerticalLines: { type: Boolean, default: false },
+    top: { type: Number, default: 0 },
+    left: { type: Number, default: 0 },
     xScale: Function,
     yScale: Function,
     width: Number,
     height: Number,
-    stroke: String,
-    strokeWidth: {
-      type: Number,
-      default: 1
+    lineStyle: {
+      type: Object,
+      default: () => ({
+        stroke: '#eaf0f6',
+        strokeWidth: 1
+      })
     },
-    strokeOpacity: {
-      type: Number,
-      default: 1
-    },
-    strokeDasharray: String,
-    numTicksRows: Number,
-    numTicksColumns: Number,
-    rowLineStyle: Object,
-    columnLineStyle: Object,
+    numTicksHorizontal: Number,
+    numTicksVertical: Number,
+    horizontalLineStyle: Object,
+    verticalLineStyle: Object,
     xOffset: Number,
     yOffset: Number
   },
+  computed: {
+    computedHorizontalLineStyle () {
+      return { ...this.lineStyle, ...this.horizontalLineStyle }
+    },
+    computedVerticalLineStyle () {
+      return { ...this.lineStyle, ...this.verticalLineStyle }
+    }
+  },
   components: {
-    Group, Rows, Columns
+    Group, GridLines
   }
 }
 </script>
