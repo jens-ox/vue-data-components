@@ -29,10 +29,7 @@ export default {
         strokeWidth: 1
       })
     },
-    transform: {
-      type: String,
-      default: ''
-    }
+    transform: { type: String, default: '' }
   }
 }
 </script>
