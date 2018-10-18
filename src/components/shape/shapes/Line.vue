@@ -5,11 +5,8 @@
     :y1="from.y"
     :x2="to.x"
     :y2="to.y"
-    :stroke="stroke"
-    :stroke-width="strokeWidth"
-    :stroke-dasharray="strokeDasharray"
+    :style="lineStyle"
     :transform="transform"
-    v-bind="restProps"
   />
 </template>
 <script>
@@ -25,24 +22,17 @@ export default {
       type: Object,
       default: new Point({ x: 1, y: 1 })
     },
-    stroke: {
-      type: String,
-      default: 'black'
-    },
-    strokeWidth: {
-      type: Number,
-      default: 1
-    },
-    strokeDasharray: {
-      type: String,
-      default: ''
+    lineStyle: {
+      type: Object,
+      default: () => ({
+        stroke: 'black',
+        strokeWidth: 1
+      })
     },
     transform: {
       type: String,
       default: ''
-    },
-    data: Array,
-    restProps: Object
+    }
   }
 }
 </script>

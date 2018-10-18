@@ -57,8 +57,7 @@ export default {
     },
     pieSort: Function,
     pieSortValues: Function,
-    pieValue: Function,
-    restProps: Object
+    pieValue: Function
   },
   computed: {
     path () {

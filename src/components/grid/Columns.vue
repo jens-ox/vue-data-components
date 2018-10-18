@@ -4,11 +4,7 @@
       v-bind:key="`column-line-${d}-${i}`"
       :from="fromPoint(x(d))"
       :to="toPoint(x(d))"
-      :stroke="stroke"
-      :stroke-width="strokeWidth"
-      :stroke-dasharray="strokeDasharray"
-      :style="lineStyle"
-      v-bind="restProps"
+      :lineStyle="lineStyle"
     />
   </Group>
 </template>
@@ -29,22 +25,18 @@ export default {
     },
     scale: Function,
     height: Number,
-    stroke: {
-      type: String,
-      default: '#eaf0f6'
-    },
-    strokeWidth: {
-      type: Number,
-      default: 1
-    },
-    strokeDasharray: String,
     numTicks: {
       type: Number,
       default: 10
     },
-    lineStyle: Object,
-    offset: Number,
-    restProps: Object
+    lineStyle: {
+      type: Object,
+      default: () => ({
+        stroke: '#eaf0f6',
+        strokeWidth: 1
+      })
+    },
+    offset: Number
   },
   computed: {
     ticks () { return this.scale.ticks ? this.scale.ticks(this.numTicks) : this.scale.domain() }

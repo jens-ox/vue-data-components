@@ -3,7 +3,6 @@
     <radialGradient
       :id="useID"
       :gradientTransform="rotate ? `rotate(${rotate})` : transform"
-      v-bind="restProps"
     >
       <slot />
       <stop :offset="fromOffset" :stop-color="from" :stop-opacity="fromOpacity" v-if="!$slots.default" />
@@ -37,8 +36,7 @@ export default {
       default: 1
     },
     rotate: Object,
-    transform: String,
-    restProps: Object
+    transform: String
   }
 }
 </script>

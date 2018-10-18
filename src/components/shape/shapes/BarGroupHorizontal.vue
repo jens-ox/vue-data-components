@@ -58,8 +58,7 @@ export default {
       required: true
     },
     top: Number,
-    left: Number,
-    restProps: Object
+    left: Number
   },
   computed: {
     format () { return this.y0Scale.tickFormat ? this.y0Scale.tickFormat() : d => d }

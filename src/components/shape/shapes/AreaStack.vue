@@ -5,7 +5,6 @@
       v-bind:key="`area-stack-${i}-${series.key || ''}`"
       class="`vdc-area-stack"
       :d="path(series)"
-      v-bind="restProps"
     />
     <g
       v-if="!!glyph" class="vdc-area-stack-glyphs"
@@ -39,8 +38,7 @@ export default {
     reverse: {
       type: Boolean,
       default: false
-    },
-    restProps: Object
+    }
   },
   computed: {
     stack () {

@@ -8,7 +8,6 @@
       :stroke-dasharray="strokeDasharray"
       :fill="fill"
       :transform="`translate(${left}, ${top})`"
-      v-bind="restProps"
     />
   </g>
 </template>
@@ -52,8 +51,7 @@ export default {
     curve: {
       type: Function,
       default: curveLinear
-    },
-    restProps: Object
+    }
   },
   methods: {
     path (data) {

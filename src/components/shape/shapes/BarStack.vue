@@ -30,7 +30,6 @@
           data: d.data
         }"
         v-on:mousemove.native="movementHandler(s.key, d[1], d.data, $event)"
-        v-bind="restProps"
       />
     </Group>
   </Group>
@@ -68,8 +67,7 @@ export default {
     },
     top: Number,
     left: Number,
-    height: Number,
-    restProps: Object
+    height: Number
   },
   computed: {
     series () { return d3stack().keys(this.keys)(this.data) },

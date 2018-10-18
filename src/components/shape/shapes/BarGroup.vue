@@ -21,7 +21,6 @@
           x: format(x0(d)),
           data: d
         }"
-        v-bind="restProps"
       />
     </Group>
   </Group>
@@ -65,8 +64,7 @@ export default {
       required: true
     },
     top: Number,
-    left: Number,
-    restProps: Object
+    left: Number
   },
   computed: {
     format () { return this.x0Scale.tickFormat ? this.x0Scale.tickFormat() : d => d }

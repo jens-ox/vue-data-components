@@ -5,11 +5,11 @@
     <Group
       v-for="(val, index) in values"
       v-if="!hideZero || val > 0"
-      v-bind:key="`vx-tick-${val}-${index}`"
+      :key="`vx-tick-${val}-${index}`"
       :transform="tickTransform"
     >
 
-      <LineShape v-if="!hideTicks" :from="tickFromPoint(val)" :to="tickToPoint(val)" :stroke="tickStroke" />
+      <LineShape v-if="!hideTicks" :from="tickFromPoint(val)" :to="tickToPoint(val)" :lineStyle="{ stroke: tickStroke }" />
       <text
         :transform="tickLabelTransform(val)"
         v-bind="computedTickLabelProps"
@@ -21,9 +21,11 @@
       v-if="!hideAxisLine"
       :from="axisFromPoint"
       :to="axisToPoint"
-      :stroke="stroke"
-      :strokeWidth="strokeWidth"
-      :strokeDasharray="strokeDasharray"
+      :lineStyle="{
+        stroke,
+        strokeWidth,
+        strokeDasharray
+      }"
     />
 
     <!-- axis label -->

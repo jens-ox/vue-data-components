@@ -7,7 +7,6 @@
       :x2="x2"
       :y2="y2"
       :gradientTransform="rotate ? `rotate(${rotate})` : transform"
-      v-bind="restProps"
     >
       <slot />
       <stop :offset="fromOffset" :stop-color="from" :stop-opacity="fromOpacity" v-if="!$slots.default" />
@@ -61,8 +60,7 @@ export default {
     vertical: {
       type: Boolean,
       default: true
-    },
-    restProps: Object
+    }
   }
 }
 </script>

@@ -2,14 +2,10 @@
   <Group :top="top" :left="left">
     <LineShape
       v-for="(d, i) in ticks"
-      v-bind:key="`row-line-${d}-${i}`"
+      :key="`row-line-${d}-${i}`"
       :from="fromPoint(y(d))"
       :to="toPoint(y(d))"
-      :stroke="stroke"
-      :stroke-width="strokeWidth"
-      :stroke-dasharray="strokeDasharray"
-      :style="lineStyle"
-      v-bind="restProps"
+      :lineStyle="lineStyle"
     />
   </Group>
 </template>
@@ -30,22 +26,18 @@ export default {
     },
     scale: Function,
     width: Number,
-    stroke: {
-      type: String,
-      default: '#eaf0f6'
-    },
-    strokeWidth: {
-      type: Number,
-      default: 1
-    },
-    strokeDasharray: String,
     numTicks: {
       type: Number,
       default: 10
     },
-    lineStyle: Object,
-    offset: Number,
-    restProps: Object
+    lineStyle: {
+      type: Object,
+      default: () => ({
+        stroke: '#eaf0f6',
+        strokeWidth: 1
+      })
+    },
+    offset: Number
   },
   computed: {
     ticks () { return this.scale.ticks ? this.scale.ticks(this.numTicks) : this.scale.domain() }
