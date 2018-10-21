@@ -1,6 +1,1 @@
-export { default as Axis } from './axes/Axis'
-export { default as AxisLeft } from './axes/AxisLeft'
-export { default as AxisRight } from './axes/AxisRight'
-export { default as AxisTop } from './axes/AxisTop'
-export { default as AxisBottom } from './axes/AxisBottom'
-export { default as Orientation } from './constants/orientation'
+export { default as Axis } from './Axis'
