@@ -4,6 +4,7 @@
     :x="x" :y="y"
     :xScale="xScale" :yScale="yScale"
     :pathStyle="computedStyle"
+    :curve="curve"
   />
 </template>
 <script>

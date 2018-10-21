@@ -1,63 +1,44 @@
-<!--
-  A cartesian graph usually contains the following components:
-  - 0, 1, or 2 axes (with optional label)
-  - grid
-  - crosshair
-  - tooltip
-  - markers
-  - hidden voronoi tessellation for selection
-
--->
 <template>
   <svg :width="width" :height="height">
     <group class="graph-outer">
 
-      <!-- two options for y axis -->
-      <axis-left v-if="!yHideAxis && !yRight"
+      <!-- y axis -->
+      <axis v-if="!yHideAxis"
+        :orientation="yRight ? 'right' : 'left'"
         :top="margin.top"
         :left="margin.left"
         :scale="yScale"
         :hideZero="yHideZero"
-        :numTicks="yTicks || yTickCount"
-        :labelOffset="yLabelOffset"
-        :label="yLabel"
-      />
-      <axis-right v-if="!yHideAxis && yRight"
-        :top="margin.top"
-        :left="width - margin.right"
-        :scale="yScale"
-        :hideZero="xHideZero"
-        :numTicks="yTicks || yTickCount"
-        :labelOffset="xLabelOffset"
-        :label="yLabel"
+        :ticks="{
+          count: yTicks || yTickCount,
+          label: {
+            dx: '-0.25em'
+          }
+        }"
+        :label="{
+          text: yLabel,
+          offset: yLabelOffset
+        }"
       />
 
       <!-- two options for x axis -->
-      <axis-bottom v-if="!xHideAxis && !xTop"
+      <axis v-if="!xHideAxis"
+        :orientation="xTop ? 'top' : 'bottom'"
         :top="height - margin.bottom"
         :left="margin.left"
         :scale="xScale"
-        :numTicks="xTicks || xTickCount"
-        :tickRotate="45"
-        :tickLabelProps="{
-          'dx': '0.75em',
-          'dy': '0.25em'
+        :ticks="{
+          count: xTicks || xTickCount,
+          rotate: 45,
+          label: {
+            dx: '0.75em',
+            dy: '0.25em'
+          }
         }"
-        :labelOffset="25"
-        :label="xLabel"
-      />
-      <axis-top v-if="!xHideAxis && xTop"
-        :top="margin.top"
-        :left="margin.left"
-        :scale="xScale"
-        :numTicks="xTicks || xTickCount"
-        :tickRotate="45"
-        :tickLabelProps="{
-          'dx': '0.75em',
-          'dy': '0.25em'
+        :label="{
+          text: xLabel,
+          offset: 35
         }"
-        :labelOffset="25"
-        :label="xLabel"
       />
     </group>
     <group class="graph-inner" :top="margin.top" :left="margin.left">
@@ -68,6 +49,10 @@
         :yScale="yScale"
         :width="innerWidth"
         :height="innerHeight"
+        :lineStyle="{
+          stroke: 'grey',
+          strokeDasharray: '5,5'
+        }"
         :numTicksRows="yTicks || yTickCount"
         :numTicksColumns="xTicks || xTickCount"
       />
@@ -79,7 +64,7 @@
 <script>
 import { Group } from '../group'
 import { Grid } from '../grid'
-import { AxisLeft, AxisBottom, AxisTop, AxisRight } from '../axis'
+import { Axis } from '../axis'
 
 export default {
   props: {
@@ -156,7 +141,7 @@ export default {
     },
     yLabelOffset: {
       type: Number,
-      default: 40
+      default: 30
     }
   },
   computed: {
@@ -182,7 +167,7 @@ export default {
     }
   },
   components: {
-    Group, Grid, AxisLeft, AxisBottom, AxisTop, AxisRight
+    Group, Grid, Axis
   }
 }
 </script>

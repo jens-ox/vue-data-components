@@ -17,6 +17,7 @@
       :activeStyle="{ stroke: 'red', strokeWidth: 2 }"
       :isInactive="activeSeries !== -1 && activeSeries !== i"
       :inactiveStyle="{ stroke: 'rgba(0,0,0,0.2)' }"
+      :curve="curve"
     />
 
     <!-- voronoi paths -->
@@ -35,6 +36,7 @@ import { LineSequence } from '../primitive'
 import { genDateValue } from '../mock-data'
 import { scaleTime, scaleLinear } from '../scale'
 import { MultiSequenceVoronoi } from '../voronoi'
+import { curveBasis } from '../curve'
 import { extent, max, merge } from 'd3-array'
 
 export default {
@@ -53,6 +55,9 @@ export default {
     this.series = this.genLines(4)
   },
   computed: {
+    curve () {
+      return curveBasis
+    },
 
     // scales
     xScale () {
