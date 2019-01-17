@@ -6,7 +6,7 @@ Please note that this library is in early development.
 
 ## Documentation
 
-See [here](https://jens-ox.github.io/vue-data-components/).
+Will be done soon™
 
 ## Development setup
 
