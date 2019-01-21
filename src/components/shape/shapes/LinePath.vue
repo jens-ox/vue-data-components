@@ -1,7 +1,6 @@
 <template>
   <path
-    class="vdc-linepath"
-    :d="path(data)"
+    :d="path"
     :style="pathStyle"
   />
 </template>
@@ -29,14 +28,14 @@ export default {
       default: curveLinear
     }
   },
-  methods: {
-    path (data) {
+  computed: {
+    path () {
       const path = line()
         .x(d => this.xScale(this.x(d)))
         .y(d => this.yScale(this.y(d)))
         .defined(this.defined)
         .curve(this.curve)
-      return path(data)
+      return path(this.data)
     }
   }
 }
