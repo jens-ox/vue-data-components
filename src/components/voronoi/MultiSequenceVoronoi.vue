@@ -1,11 +1,11 @@
 <template>
   <group
-    v-on:mouseleave.native="voronoiOutHandler()"
+    v-on:mouseleave.native="voronoiOutHandler"
   >
     <path
-      v-for="(polygon, i) in voronoiPolygons"
+      v-for="(polygon, i) in proxyPolygons"
       :key="`polygon-${i}`"
-      stroke="none"
+      stroke="black"
       fill="rgba(0,0,0,0)"
       :d="polygon.path ? `M${polygon.path.join('L')}Z` : null"
       @mouseover="voronoiHoverHandler(polygon.offset)"
@@ -19,6 +19,10 @@ import { Delaunay } from 'd3-delaunay'
 
 export default {
   props: {
+    voronoiComputationCounter: {
+      type: Number,
+      default: 0
+    },
     series: {
       type: Array,
       required: true
@@ -47,11 +51,33 @@ export default {
       type: Number,
       required: true
     },
+    recomputeVoronoi: {
+      type: Boolean,
+      default: true
+    },
     hoverHandler: Function,
     clickHandler: Function,
     outHandler: Function
   },
+  watch: {
+    voronoiComputationCounter () {
+      if (this.recomputeVoronoi) return
+      this.computedPolygons = this.voronoiPolygons
+    }
+  },
+  data () {
+    return {
+      computedPolygons: {}
+    }
+  },
+  beforeMount () {
+    if (this.recomputeVoronoi) return
+    this.computedPolygons = this.voronoiPolygons
+  },
   computed: {
+    proxyPolygons () {
+      return this.recomputeVoronoi ? this.voronoiPolygons : this.computedPolygons
+    },
     data () {
       return this.series.reduce((rec, d, i) => {
         return rec.concat(d.map((point, j) => {
@@ -64,9 +90,11 @@ export default {
       }, [])
     },
     delaunay () {
+      console.log('lifting delaunay')
       return Delaunay.from(this.data, d => this.xScale(this.x(d)), d => this.yScale(this.y(d)))
     },
     voronoi () {
+      console.log('lifting voronoi')
       return this.delaunay.voronoi([
         0,
         0,
