@@ -1,34 +1,40 @@
 <template>
-  <cartesian-graph
-    :width="width" :height="height"
-    :margin="margin"
-    :xScale="xScale" :yScale="yScale"
-    xLabel="Time" yLabel="€ per sec"
-  >
-    <!-- lines -->
-    <line-sequence
-      v-for="(d, i) in series"
-      :key="`lines-${i}`"
-      :sequence="d"
-      :x="x" :y="y"
+  <div>
+    <cartesian-graph
+      :width="width" :height="height"
+      :margin="margin"
       :xScale="xScale" :yScale="yScale"
-      :pathStyle="{}"
-      :isActive="i === activeSeries"
-      :activeStyle="{ stroke: 'red', strokeWidth: 2 }"
-      :isInactive="activeSeries !== -1 && activeSeries !== i"
-      :inactiveStyle="{ stroke: 'rgba(0,0,0,0.2)' }"
-      :curve="curve"
-    />
+      xLabel="Time" yLabel="€ per sec"
+    >
+      <!-- lines -->
+      <line-sequence
+        v-for="(d, i) in series"
+        :key="`lines-${i}`"
+        :sequence="d"
+        :x="x" :y="y"
+        :xScale="xScale" :yScale="yScale"
+        :pathStyle="{}"
+        :isActive="i === activeSeries"
+        :activeStyle="{ stroke: 'red', strokeWidth: 2 }"
+        :isInactive="activeSeries !== -1 && activeSeries !== i"
+        :inactiveStyle="{ stroke: 'rgba(0,0,0,0.2)' }"
+        :curve="curve"
+      />
 
-    <!-- voronoi paths -->
-    <multi-sequence-voronoi
-      :series="series"
-      :x="x" :y="y"
-      :xScale="xScale" :yScale="yScale"
-      :innerWidth="innerWidth" :innerHeight="innerHeight"
-      :hoverHandler="hoverHandler" :outHandler="outHandler"
-    />
-  </cartesian-graph>
+      <!-- voronoi paths -->
+      <multi-sequence-voronoi
+        :series="series"
+        :x="x" :y="y"
+        :xScale="xScale" :yScale="yScale"
+        :innerWidth="innerWidth" :innerHeight="innerHeight"
+        :hoverHandler="hoverHandler" :outHandler="outHandler"
+        :recomputeVoronoi="false"
+        :voronoiComputationCounter="voronoiCounter"
+      />
+    </cartesian-graph>
+    <button @click="series[0].push(genValue())">Click Me Please</button>
+    <button @click="voronoiCounter++">Re-Compute Voronoi</button>
+  </div>
 </template>
 <script>
 import { CartesianGraph } from '../graph'
@@ -48,7 +54,8 @@ export default {
     return {
       series: [],
       activeSeries: -1,
-      margin: { top: 20, left: 60, bottom: 60, right: 20 }
+      margin: { top: 20, left: 60, bottom: 60, right: 20 },
+      voronoiCounter: 0
     }
   },
   beforeMount () {
@@ -82,6 +89,9 @@ export default {
       return new Array(num).fill(1).map(() => {
         return genDateValue(25)
       })
+    },
+    genValue () {
+      return genDateValue(1)[0]
     },
 
     // accessors
