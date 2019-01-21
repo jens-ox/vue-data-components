@@ -5,7 +5,7 @@
     <path
       v-for="(polygon, i) in proxyPolygons"
       :key="`polygon-${i}`"
-      stroke="black"
+      stroke="none"
       fill="rgba(0,0,0,0)"
       :d="polygon.path ? `M${polygon.path.join('L')}Z` : null"
       @mouseover="voronoiHoverHandler(polygon.offset)"
