@@ -1,6 +1,6 @@
 <template>
   <group v-on:mouseleave.native="voronoiOutHandler">
-    <rect :width="innerWidth" :height="innerHeight" fill-opacity="0" @mousemove="mouseMoveHandler"/>
+    <rect :width="innerWidth" :height="innerHeight" fill-opacity="0" @mousemove="mouseMoveHandler" @click="voronoiClickHandler" @mouseout="voronoiOutHandler"/>
   </group>
 </template>
 <script>
