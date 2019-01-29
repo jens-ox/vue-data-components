@@ -1,16 +1,6 @@
 <template>
-  <group
-    v-on:mouseleave.native="voronoiOutHandler"
-  >
-    <path
-      v-for="(polygon, i) in proxyPolygons"
-      :key="`polygon-${i}`"
-      stroke="none"
-      fill="rgba(0,0,0,0)"
-      :d="polygon.path ? `M${polygon.path.join('L')}Z` : null"
-      @mouseover="voronoiHoverHandler(polygon.offset)"
-      @click="voronoiClickHandler(polygon.offset)"
-    />
+  <group v-on:mouseleave.native="voronoiOutHandler">
+    <rect :width="innerWidth" :height="innerHeight" fill-opacity="0" @mousemove="mouseMoveHandler"/>
   </group>
 </template>
 <script>
@@ -62,21 +52,21 @@ export default {
   watch: {
     voronoiComputationCounter () {
       if (this.recomputeVoronoi) return
-      this.computedPolygons = this.voronoiPolygons
+      this.computedDelaunay = this.delaunay
     }
   },
   data () {
     return {
-      computedPolygons: {}
+      computedDelaunay: {}
     }
   },
   beforeMount () {
     if (this.recomputeVoronoi) return
-    this.computedPolygons = this.voronoiPolygons
+    this.computedDelaunay = this.delaunay
   },
   computed: {
-    proxyPolygons () {
-      return this.recomputeVoronoi ? this.voronoiPolygons : this.computedPolygons
+    proxyDelaunay () {
+      return this.recomputeVoronoi ? this.delaunay : this.computedDelaunay
     },
     data () {
       return this.series.reduce((rec, d, i) => {
@@ -91,47 +81,27 @@ export default {
     },
     delaunay () {
       return Delaunay.from(this.data, d => this.xScale(this.x(d)), d => this.yScale(this.y(d)))
-    },
-    voronoi () {
-      return this.delaunay.voronoi([
-        0,
-        0,
-        this.innerWidth,
-        this.innerHeight
-      ])
-    },
-    voronoiPolygons () {
-      const iterator = this.voronoi.cellPolygons()
-      let polygon = iterator.next()
-      let array = []
-      let done = polygon.done
-      let offset = 0
-      while (!done) {
-        array.push({
-          offset,
-          path: polygon.value
-        })
-        polygon = iterator.next()
-        offset++
-        done = polygon.done
-      }
-      return array
     }
   },
   methods: {
-    voronoiClickHandler (offset) {
-      if (this.clickHandler) this.clickHandler(this.data[offset])
+    getOffset (e) {
+      const bounding = e.target.getBoundingClientRect()
+      return this.proxyDelaunay.find(e.layerX - bounding.x, e.layerY - bounding.y)
+    },
+    voronoiClickHandler (e) {
+      if (this.clickHandler) this.clickHandler(this.data[this.getOffset(e)])
     },
 
     /**
      * retrieves line and point information
      */
-    voronoiHoverHandler (offset) {
-      if (this.hoverHandler) this.hoverHandler(this.data[offset])
-    },
 
     voronoiOutHandler () {
       if (this.outHandler) this.outHandler()
+    },
+
+    mouseMoveHandler (e) {
+      if (this.hoverHandler) this.hoverHandler(this.data[this.getOffset(e)])
     }
   },
   components: {
