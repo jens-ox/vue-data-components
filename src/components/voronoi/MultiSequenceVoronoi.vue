@@ -90,11 +90,9 @@ export default {
       }, [])
     },
     delaunay () {
-      console.log('lifting delaunay')
       return Delaunay.from(this.data, d => this.xScale(this.x(d)), d => this.yScale(this.y(d)))
     },
     voronoi () {
-      console.log('lifting voronoi')
       return this.delaunay.voronoi([
         0,
         0,
