@@ -9,7 +9,7 @@ import { Delaunay } from 'd3-delaunay'
 
 export default {
   props: {
-    voronoiComputationCounter: {
+    recompute: {
       type: Number,
       default: 0
     },
@@ -45,12 +45,14 @@ export default {
       type: Boolean,
       default: true
     },
-    hoverHandler: Function,
-    clickHandler: Function,
-    outHandler: Function
+    paths: Object,
+    outHandler: {
+      type: Function,
+      default: () => {}
+    }
   },
   watch: {
-    voronoiComputationCounter () {
+    recompute () {
       if (this.recomputeVoronoi) return
       this.computedDelaunay = this.delaunay
     }
@@ -109,3 +111,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.voronoi-default {
+  stroke: none;
+  fill: rgba(0, 0, 0, 0);
+}
+</style>

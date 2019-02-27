@@ -27,9 +27,10 @@
         :x="x" :y="y"
         :xScale="xScale" :yScale="yScale"
         :innerWidth="innerWidth" :innerHeight="innerHeight"
-        :hoverHandler="hoverHandler" :outHandler="outHandler"
-        :recomputeVoronoi="false"
-        :voronoiComputationCounter="voronoiCounter"
+        :paths="{
+          hoverHandler
+        }"
+        :outHandler="outHandler"
       />
     </cartesian-graph>
     <button @click="series[0].push(genValue())">Click Me Please</button>
