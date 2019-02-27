@@ -29,8 +29,8 @@
       :series="series"
       :x="x" :y="y"
       :xScale="xScale" :yScale="yScale"
-      :innerWidth="innerWidth" :innerHeight="innerHeight"
-      :hoverHandler="hoverHandler" :outHandler="outHandler"
+      :width="innerWidth" :height="innerHeight"
+      :moveHandler="moveHandler" :outHandler="outHandler"
     />
   </cartesian-graph>
 </template>
@@ -90,7 +90,7 @@ export default {
     y (d) { return d.value },
 
     // handlers
-    hoverHandler (point) {
+    moveHandler (point) {
       this.activeSeries = point.indexSeries
       this.activePoint = point.indexPoints
     },
