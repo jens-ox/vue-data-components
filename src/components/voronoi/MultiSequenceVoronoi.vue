@@ -1,15 +1,15 @@
 <template>
   <group
-    v-on:mouseleave.native="voronoiOutHandler"
+    v-on:mouseleave.native="outHandler"
   >
     <path
       v-for="(polygon, i) in proxyPolygons"
       :key="`polygon-${i}`"
-      stroke="none"
-      fill="rgba(0,0,0,0)"
+      :class="_paths.class(polygon, i)"
+      :style="_paths.style(polygon, i)"
       :d="polygon.path ? `M${polygon.path.join('L')}Z` : null"
-      @mouseover="voronoiHoverHandler(polygon.offset)"
-      @click="voronoiClickHandler(polygon.offset)"
+      @mouseover="_paths.hoverHandler(data[polygon.offset])"
+      @click="_paths.clickHandler(data[polygon.offset])"
     />
   </group>
 </template>
@@ -19,7 +19,7 @@ import { Delaunay } from 'd3-delaunay'
 
 export default {
   props: {
-    voronoiComputationCounter: {
+    recompute: {
       type: Number,
       default: 0
     },
@@ -55,12 +55,14 @@ export default {
       type: Boolean,
       default: true
     },
-    hoverHandler: Function,
-    clickHandler: Function,
-    outHandler: Function
+    paths: Object,
+    outHandler: {
+      type: Function,
+      default: () => {}
+    }
   },
   watch: {
-    voronoiComputationCounter () {
+    recompute () {
       if (this.recomputeVoronoi) return
       this.computedPolygons = this.voronoiPolygons
     }
@@ -75,6 +77,15 @@ export default {
     this.computedPolygons = this.voronoiPolygons
   },
   computed: {
+    _paths () {
+      return {
+        hoverHandler: () => {},
+        clickHandler: () => {},
+        class: () => 'voronoi-default',
+        style: () => {},
+        ...this.paths
+      }
+    },
     proxyPolygons () {
       return this.recomputeVoronoi ? this.voronoiPolygons : this.computedPolygons
     },
@@ -90,11 +101,9 @@ export default {
       }, [])
     },
     delaunay () {
-      console.log('lifting delaunay')
       return Delaunay.from(this.data, d => this.xScale(this.x(d)), d => this.yScale(this.y(d)))
     },
     voronoi () {
-      console.log('lifting voronoi')
       return this.delaunay.voronoi([
         0,
         0,
@@ -120,24 +129,14 @@ export default {
       return array
     }
   },
-  methods: {
-    voronoiClickHandler (offset) {
-      if (this.clickHandler) this.clickHandler(this.data[offset])
-    },
-
-    /**
-     * retrieves line and point information
-     */
-    voronoiHoverHandler (offset) {
-      if (this.hoverHandler) this.hoverHandler(this.data[offset])
-    },
-
-    voronoiOutHandler () {
-      if (this.outHandler) this.outHandler()
-    }
-  },
   components: {
     Group
   }
 }
 </script>
+<style scoped>
+.voronoi-default {
+  stroke: none;
+  fill: rgba(0, 0, 0, 0);
+}
+</style>
