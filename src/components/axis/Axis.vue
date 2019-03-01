@@ -4,16 +4,15 @@
     <!-- ticks -->
     <Group
       v-for="(val, index) in _ticks.values"
-      v-if="!hideSubZero || val > 0"
-      :key="`vx-tick-${val}-${index}`"
-      :transform="_ticks.transform"
+      :key="`vdc-tick-${val}-${index}`"
     >
-
       <LineShape v-if="!_ticks.hide" :from="tickFromPoint(val)" :to="tickToPoint(val)" :lineStyle="_ticks.lineStyle" />
-      <text
-        :transform="tickLabelTransform(val)"
-        v-bind="_ticks.label"
-      >{{ _ticks.format(val, index) }}</text>
+      <g :transform="tickLabelTransform(val)">
+        <text-component
+          v-bind="_ticks.label"
+          :text="_ticks.format(val, index)"
+        />
+      </g>
     </Group>
 
     <!-- axis line -->
@@ -25,19 +24,18 @@
     />
 
     <!-- axis label -->
-    <text
+    <text-component
       v-if="_label.text"
       class="vdc-axis-label"
       v-bind="_label"
-    >
-      {{ _label.text }}
-    </text>
+    />
   </Group>
 </template>
 <script>
 import { LineShape } from '../shape'
 import { AbstractPoint as Point } from '../point'
 import { Group } from '../group'
+import { TextComponent } from '../text'
 import deepmerge from 'deepmerge'
 
 export default {
@@ -48,9 +46,9 @@ export default {
     rangePadding: { type: Number, default: 0 },
     scale: { type: Function, required: true },
 
-    label: Object,
-    ticks: Object,
-    line: Object,
+    label: { type: Object, default: () => ({}) },
+    ticks: { type: Object, default: () => ({}) },
+    line: { type: Object, default: () => ({}) },
 
     orientation: {
       type: String,
@@ -62,14 +60,19 @@ export default {
     _ticks () {
       // pre-set parameters used for computation
       const count = (this.ticks && this.ticks.count) ? this.ticks.count : 10
+      const rotate = (this.ticks && this.ticks.label && this.ticks.label.rotate) ? this.ticks.label.rotate : 0
+
+      // values are too complex to be inlined
+      let values = this.scale.ticks ? this.scale.ticks(count) : this.scale.domain()
+      if (this.hideSubZero) values = values.filter(value => value > 0)
+
+      console.log(this.scale.tickFormat)
 
       return deepmerge({
         hide: false,
         count,
-        rotate: 0,
         length: 8,
-        transform: '',
-        values: this.scale.ticks ? this.scale.ticks(count) : this.scale.domain(),
+        values,
         format: this.scale.tickFormat ? this.scale.tickFormat() : d => d,
         lineStyle: {
           stroke: 'black',
@@ -77,15 +80,17 @@ export default {
           fontSize: 10
         },
         label: {
-          style: {
-            textAnchor: this.horizontal ? 'middle' : (this.orientation === 'left' ? 'end' : 'start'),
-            alignmentBaseline: 'middle',
+          rotate,
+          width: 100,
+          textStyle: {
+            textAnchor: this.horizontal ? (rotate === 0 ? 'middle' : 'start') : (this.orientation === 'left' ? 'end' : 'start'),
+            dominantBaseline: 'middle',
             fontFamily: 'Arial',
             fill: 'black',
             fontSize: 10
           }
         }
-      }, this.ticks || {})
+      }, this.ticks)
     },
     _line () {
       return deepmerge({
@@ -93,20 +98,18 @@ export default {
         lineStyle: {
           stroke: 'black'
         }
-      }, this.line || {})
+      }, this.line)
     },
     _label () {
-      const sign = this.tickSign
-
       // pre-set defaults for values used during computation
-      const fontSize = (this.label && this.label.style && this.label.style.fontSize) ? this.label.style.fontSize : 12
+      const fontSize = (this.label && this.label.textStyle && this.label.textStyle.fontSize) ? this.label.textStyle.fontSize : 12
       const offset = (this.label && this.label.offset) ? this.label.offset : 10
 
-      const x = sign * (Math.max(...this.range) / 2)
+      const x = this.tickSign * (Math.max(...this.range) / 2)
       let y = null
       let transform = null
       if (this.horizontal) {
-        y = sign * (this._ticks.length + offset + fontSize)
+        y = this.tickSign * (this._ticks.length + offset + fontSize)
       } else {
         y = -(this._ticks.length + offset + fontSize)
         transform = `rotate(${this.tickSign * 90})`
@@ -124,7 +127,7 @@ export default {
         x,
         y,
         transform
-      }, this.label || {})
+      }, this.label)
     },
     range () { return this.scale.range() },
     horizontal () { return this.orientation === 'bottom' || this.orientation === 'top' },
@@ -165,12 +168,12 @@ export default {
     },
     tickLabelTransform (val) {
       const tickLabelX = this.tickToPoint(val).x
-      const tickLabelY = this.tickToPoint(val).y + (this.orientation === 'bottom' ? this._ticks.label.style.fontSize : 0)
-      return `translate(${tickLabelX}, ${tickLabelY}), rotate(${this._ticks.rotate})`
+      const tickLabelY = this.tickToPoint(val).y + (this.orientation === 'bottom' ? this._ticks.label.textStyle.fontSize : 0)
+      return `translate(${tickLabelX}, ${tickLabelY})`
     }
   },
   components: {
-    LineShape, Group
+    LineShape, Group, TextComponent
   }
 }
 </script>

@@ -3,10 +3,15 @@
     <multiline-graph :width="width" :height="height" />
     <br><br>
     <multipoint-graph :width="width" :height="height" />
+    <br><br>
+    <bar-chart :width="width" :height="height" />
   </div>
 </template>
 
 <script>
+import { TextComponent } from './components/text'
+import { Group } from './components/group'
+import BarChart from './components/examples/BarChart'
 import MultilineGraph from './components/examples/MultilineGraph'
 import MultipointGraph from './components/examples/MultipointGraph'
 
@@ -14,7 +19,9 @@ export default {
   name: 'app',
   data () {
     return {
-      windowWidth: 0
+      textWidth: 0,
+      windowWidth: 0,
+      rotate: 0
     }
   },
   beforeMount () {
@@ -34,7 +41,7 @@ export default {
     }
   },
   components: {
-    MultilineGraph, MultipointGraph
+    MultilineGraph, MultipointGraph, BarChart, TextComponent, Group
   }
 }
 </script>

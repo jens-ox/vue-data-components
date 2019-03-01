@@ -1,57 +1,55 @@
 <template>
-  <Group class="vx-grid" :top="top" :left="left">
-    <grid-lines v-if="!hideHorizontalLines"
-      type="horizontal"
-      :scale="yScale"
-      :width="width"
-      :lineStyle="computedHorizontalLineStyle"
-      :numTicks="numTicksHorizontal"
-      :offset="yOffset"
+  <Group class="vdc-grid" :top="top" :left="left">
+    <grid-lines
+      v-if="!_linesHorizontal.hide"
+      v-bind="_linesHorizontal"
     />
-    <grid-lines v-if="!hideVerticalLines"
-      type="vertical"
-      :scale="xScale"
-      :height="height"
-      :lineStyle="computedVerticalLineStyle"
-      :numTicks="numTicksVertical"
-      :offset="xOffset"
+    <grid-lines
+      v-if="!_linesVertical.hide"
+      v-bind="_linesVertical"
     />
   </Group>
 </template>
 <script>
+import deepmerge from 'deepmerge'
 import GridLines from './GridLines'
 import { Group } from '../group'
 
 export default {
   props: {
-    hideHorizontalLines: { type: Boolean, default: false },
-    hideVerticalLines: { type: Boolean, default: false },
+    // scaling
+    xScale: { type: Function, required: true },
+    yScale: { type: Function, required: true },
+
+    // dimensions
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
     top: { type: Number, default: 0 },
     left: { type: Number, default: 0 },
-    xScale: Function,
-    yScale: Function,
-    width: Number,
-    height: Number,
-    lineStyle: {
-      type: Object,
-      default: () => ({
-        stroke: '#eaf0f6',
-        strokeWidth: 1
-      })
-    },
-    numTicksHorizontal: Number,
-    numTicksVertical: Number,
-    horizontalLineStyle: Object,
-    verticalLineStyle: Object,
-    xOffset: Number,
-    yOffset: Number
+
+    // children
+    linesHorizontal: { type: Object, default: () => ({}) },
+    linesVertical: { type: Object, default: () => ({}) },
+    lineStyle: { type: Object, default: () => ({}) }
   },
   computed: {
-    computedHorizontalLineStyle () {
-      return { ...this.lineStyle, ...this.horizontalLineStyle }
+    _linesHorizontal () {
+      return deepmerge({
+        type: 'horizontal',
+        scale: this.yScale,
+        length: this.width,
+        hide: false,
+        lineStyle: this.lineStyle
+      }, this.linesHorizontal)
     },
-    computedVerticalLineStyle () {
-      return { ...this.lineStyle, ...this.verticalLineStyle }
+    _linesVertical () {
+      return deepmerge({
+        type: 'vertical',
+        scale: this.xScale,
+        length: this.height,
+        hide: false,
+        lineStyle: this.lineStyle
+      }, this.linesVertical)
     }
   },
   components: {

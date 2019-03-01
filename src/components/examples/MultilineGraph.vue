@@ -31,7 +31,6 @@
       />
     </cartesian-graph>
     <button @click="series[0].push(genValue())">Click Me Please</button>
-    <button @click="voronoiCounter++">Re-Compute Voronoi</button>
   </div>
 </template>
 <script>
@@ -51,8 +50,7 @@ export default {
     return {
       series: [],
       activeSeries: -1,
-      margin: { top: 20, left: 60, bottom: 60, right: 20 },
-      voronoiCounter: 0
+      margin: { top: 20, left: 60, bottom: 60, right: 20 }
     }
   },
   beforeMount () {
