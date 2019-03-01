@@ -66,6 +66,20 @@ export default {
       let values = this.scale.ticks ? this.scale.ticks(count) : this.scale.domain()
       if (this.hideSubZero) values = values.filter(value => value > 0)
 
+      // set dominant baseline
+      let dominantBaseline
+      switch (this.orientation) {
+        case 'bottom':
+          dominantBaseline = 'text-before-edge'
+          break
+        case 'top':
+          dominantBaseline = 'text-after-edge'
+          break
+        default:
+          dominantBaseline = 'middle'
+          break
+      }
+
       return deepmerge({
         hide: false,
         count,
@@ -82,7 +96,7 @@ export default {
           width: 100,
           textStyle: {
             textAnchor: this.horizontal ? (rotate === 0 ? 'middle' : 'start') : (this.orientation === 'left' ? 'end' : 'start'),
-            dominantBaseline: 'middle',
+            dominantBaseline,
             fontFamily: 'Arial',
             fill: 'black',
             fontSize: 10
@@ -116,7 +130,7 @@ export default {
       return deepmerge({
         offset,
         style: {
-          textAnchor: this.horizontal ? 'start' : (this.orientation === 'left' ? 'end' : 'start'),
+          textAnchor: 'middle',
           fontFamily: 'Arial',
           fontSize,
           fill: 'black',
@@ -166,7 +180,7 @@ export default {
     },
     tickLabelTransform (val) {
       const tickLabelX = this.tickToPoint(val).x
-      const tickLabelY = this.tickToPoint(val).y + (this.orientation === 'bottom' ? this._ticks.label.textStyle.fontSize : 0)
+      const tickLabelY = this.tickToPoint(val).y
       return `translate(${tickLabelX}, ${tickLabelY})`
     }
   },

@@ -4,7 +4,16 @@
       :width="width" :height="height"
       :margin="margin"
       :xScale="xScale" :yScale="yScale"
-      xLabel="Time" yLabel="€ per sec"
+      :xAxis="{
+        label: {
+          text: 'Time'
+        }
+      }"
+      :yAxis="{
+        label: {
+          text: '€ per sec'
+        }
+      }"
     >
       <!-- lines -->
       <line-sequence
