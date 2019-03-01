@@ -136,8 +136,8 @@ export default {
           fill: 'black',
           fontWeight: 'bold'
         },
-        x,
-        y,
+        dx: x,
+        dy: y,
         transform
       }, this.label)
     },
