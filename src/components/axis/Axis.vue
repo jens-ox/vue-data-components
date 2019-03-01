@@ -66,8 +66,6 @@ export default {
       let values = this.scale.ticks ? this.scale.ticks(count) : this.scale.domain()
       if (this.hideSubZero) values = values.filter(value => value > 0)
 
-      console.log(this.scale.tickFormat)
-
       return deepmerge({
         hide: false,
         count,
