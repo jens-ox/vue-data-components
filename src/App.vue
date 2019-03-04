@@ -5,6 +5,10 @@
     <multipoint-graph :width="width" :height="height" />
     <br><br>
     <bar-chart :width="width" :height="height" />
+    <br><br>
+    <bar-group-horizontal :width="width" :height="height" />
+    <br><br>
+    test
   </div>
 </template>
 
@@ -14,6 +18,7 @@ import { Group } from './components/group'
 import BarChart from './components/examples/BarChart'
 import MultilineGraph from './components/examples/MultilineGraph'
 import MultipointGraph from './components/examples/MultipointGraph'
+import BarGroupHorizontal from './components/examples/BarGroupHorizontal'
 
 export default {
   name: 'app',
@@ -41,7 +46,7 @@ export default {
     }
   },
   components: {
-    MultilineGraph, MultipointGraph, BarChart, TextComponent, Group
+    MultilineGraph, MultipointGraph, BarChart, TextComponent, Group, BarGroupHorizontal
   }
 }
 </script>

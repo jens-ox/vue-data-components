@@ -1,16 +1,12 @@
----
-sidebar: auto
----
-
-# Introduction
-
-Visualizations can be constructed by using the available components.
-
-The following is an overview over the available components.
-
 # Group
 
-The `group` component is a wrapper around the `g` component of SVG.
+There is only one component here &ndash; `group`.
+
+## Group
+
+**Type**: Basic
+
+**Wraps**: [g](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g)
 
 **Props**
 
@@ -27,5 +23,3 @@ The `group` component is a wrapper around the `g` component of SVG.
   <!-- content -->
 </group>
 ```
-
-## 

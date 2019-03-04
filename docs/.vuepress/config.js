@@ -1,12 +1,18 @@
 module.exports = {
   title: 'Vue Data Components',
-  description: 'Modular data visualizations for Vue. Heavily inspired by vx and data-ui for React.',
-  base: '/vue-data-components/',
+  description: 'A collection of data visualization components for Vue.',
   themeConfig: {
+    displayAllHeaders: true,
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Guide', link: '/guide/' },
-      { text: 'Github', link: 'https://github.com/jens-ox/vue-data-components' },
-    ]
+      { text: 'Components', link: '/components/' },
+      { text: 'GitHub', link: 'https://github.com/jens-ox/vue-data-components' },
+    ],
+    sidebar: {
+      '/components/': [
+        '',
+        'group',
+        'grid'
+      ]
+    }
   }
 }
