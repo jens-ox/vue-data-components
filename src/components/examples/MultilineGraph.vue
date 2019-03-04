@@ -4,7 +4,16 @@
       :width="width" :height="height"
       :margin="margin"
       :xScale="xScale" :yScale="yScale"
-      xLabel="Time" yLabel="€ per sec"
+      :xAxis="{
+        label: {
+          text: 'Time'
+        }
+      }"
+      :yAxis="{
+        label: {
+          text: '€ per sec'
+        }
+      }"
     >
       <!-- lines -->
       <line-sequence
@@ -18,7 +27,6 @@
         :activeStyle="{ stroke: 'red', strokeWidth: 2 }"
         :isInactive="activeSeries !== -1 && activeSeries !== i"
         :inactiveStyle="{ stroke: 'rgba(0,0,0,0.2)' }"
-        :curve="curve"
       />
 
       <!-- voronoi paths -->
@@ -26,14 +34,12 @@
         :series="series"
         :x="x" :y="y"
         :xScale="xScale" :yScale="yScale"
-        :innerWidth="innerWidth" :innerHeight="innerHeight"
-        :hoverHandler="hoverHandler" :outHandler="outHandler"
-        :recomputeVoronoi="false"
-        :voronoiComputationCounter="voronoiCounter"
+        :width="innerWidth" :height="innerHeight"
+        :moveHandler="moveHandler"
+        :outHandler="outHandler"
       />
     </cartesian-graph>
     <button @click="series[0].push(genValue())">Click Me Please</button>
-    <button @click="voronoiCounter++">Re-Compute Voronoi</button>
   </div>
 </template>
 <script>
@@ -42,7 +48,6 @@ import { LineSequence } from '../primitive'
 import { genDateValue } from '../mock-data'
 import { scaleTime, scaleLinear } from '../scale'
 import { MultiSequenceVoronoi } from '../voronoi'
-import { curveBasis } from '../curve'
 import { extent, max, merge } from 'd3-array'
 
 export default {
@@ -54,18 +59,13 @@ export default {
     return {
       series: [],
       activeSeries: -1,
-      margin: { top: 20, left: 60, bottom: 60, right: 20 },
-      voronoiCounter: 0
+      margin: { top: 20, left: 60, bottom: 60, right: 20 }
     }
   },
   beforeMount () {
     this.series = this.genLines(4)
   },
   computed: {
-    curve () {
-      return curveBasis
-    },
-
     // scales
     xScale () {
       return scaleTime({
@@ -99,7 +99,7 @@ export default {
     y (d) { return d.value },
 
     // handlers
-    hoverHandler (point) { this.activeSeries = point.indexSeries },
+    moveHandler (point) { this.activeSeries = point.indexSeries },
     outHandler () { this.activeSeries = -1 }
   },
   components: {

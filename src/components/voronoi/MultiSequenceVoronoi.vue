@@ -1,56 +1,43 @@
 <template>
-  <group v-on:mouseleave.native="voronoiOutHandler">
-    <rect :width="innerWidth" :height="innerHeight" fill-opacity="0" @mousemove="mouseMoveHandler" @click="voronoiClickHandler" @mouseout="voronoiOutHandler"/>
-  </group>
+  <rect
+    fill-opacity="0"
+    :width="width"
+    :height="height"
+    @mousemove="voronoiMoveHandler"
+    @click="voronoiClickHandler"
+    @mouseleave="outHandler" />
 </template>
 <script>
-import { Group } from '../group'
 import { Delaunay } from 'd3-delaunay'
 
 export default {
   props: {
-    voronoiComputationCounter: {
-      type: Number,
-      default: 0
-    },
-    series: {
-      type: Array,
-      required: true
-    },
-    x: {
-      type: Function,
-      required: true
-    },
-    y: {
-      type: Function,
-      required: true
-    },
-    xScale: {
-      type: Function,
-      required: true
-    },
-    yScale: {
-      type: Function,
-      required: true
-    },
-    innerWidth: {
-      type: Number,
-      required: true
-    },
-    innerHeight: {
-      type: Number,
-      required: true
-    },
-    recomputeVoronoi: {
-      type: Boolean,
-      default: true
-    },
-    hoverHandler: Function,
-    clickHandler: Function,
-    outHandler: Function
+    // data
+    series: { type: Array, required: true },
+
+    // data accessors
+    x: { type: Function, required: true },
+    y: { type: Function, required: true },
+
+    // data scaling
+    xScale: { type: Function, required: true },
+    yScale: { type: Function, required: true },
+
+    // dimensions
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
+
+    // handlers
+    moveHandler: { type: Function, default: () => {} },
+    outHandler: { type: Function, default: () => {} },
+    clickHandler: { type: Function, default: () => {} },
+
+    // re-computation handling
+    recompute: { type: Number, default: 0 },
+    recomputeVoronoi: { type: Boolean, default: true }
   },
   watch: {
-    voronoiComputationCounter () {
+    recompute () {
       if (this.recomputeVoronoi) return
       this.computedDelaunay = this.delaunay
     }
@@ -85,27 +72,15 @@ export default {
   },
   methods: {
     getOffset (e) {
-      const bounding = e.target.getBoundingClientRect()
-      return this.proxyDelaunay.find(e.x - bounding.x, e.y - bounding.y)
+      const { x, y } = e.target.getBoundingClientRect()
+      return this.proxyDelaunay.find(e.x - x, e.y - y)
     },
     voronoiClickHandler (e) {
-      if (this.clickHandler) this.clickHandler(this.data[this.getOffset(e)])
+      this.clickHandler(this.data[this.getOffset(e)])
     },
-
-    /**
-     * retrieves line and point information
-     */
-
-    voronoiOutHandler () {
-      if (this.outHandler) this.outHandler()
-    },
-
-    mouseMoveHandler (e) {
-      if (this.hoverHandler) this.hoverHandler(this.data[this.getOffset(e)])
+    voronoiMoveHandler (e) {
+      this.moveHandler(this.data[this.getOffset(e)])
     }
-  },
-  components: {
-    Group
   }
 }
 </script>

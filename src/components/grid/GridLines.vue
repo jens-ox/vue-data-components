@@ -4,43 +4,48 @@
       :key="`${type}-line-${d}-${i}`"
       :from="fromPoint(d)"
       :to="toPoint(d)"
-      :lineStyle="lineStyle"
+      :lineStyle="_lineStyle"
     />
   </Group>
 </template>
 <script>
+import deepmerge from 'deepmerge'
 import { LineShape } from '../shape'
 import { Group } from '../group'
 import { AbstractPoint as Point } from '../point'
 
 export default {
   props: {
-    type: { type: String, required: true },
+    type: {
+      type: String,
+      required: true,
+      validator: value => ['horizontal', 'vertical'].includes(value)
+    },
+    scale: { type: Function, required: true },
+    length: { type: Number, required: true },
     top: { type: Number, default: 0 },
     left: { type: Number, default: 0 },
-    scale: Function,
-    width: Number,
-    height: Number,
-    numTicks: { type: Number, default: 10 },
-    offset: { type: Number, default: 0 },
+    tickCount: { type: Number, default: 10 },
     lineStyle: {
       type: Object,
-      default: () => ({
-        stroke: '#eaf0f6',
-        strokeWidth: 1
-      })
+      default: () => ({})
     }
   },
   computed: {
-    ticks () { return this.scale.ticks ? this.scale.ticks(this.numTicks) : this.scale.domain() }
+    ticks () { return this.scale.ticks ? this.scale.ticks(this.tickCount) : this.scale.domain() },
+    _lineStyle () {
+      return deepmerge({
+        stroke: '#eaf0f6',
+        strokeWidth: 1
+      }, this.lineStyle)
+    }
   },
   methods: {
-    pos (d) { return this.scale(d) + this.offset },
     fromPoint (value) {
-      return this.type === 'horizontal' ? new Point({ x: 0, y: this.pos(value) }) : new Point({ x: this.pos(value), y: 0 })
+      return this.type === 'horizontal' ? new Point({ x: 0, y: this.scale(value) }) : new Point({ x: this.scale(value), y: 0 })
     },
     toPoint (d) {
-      return this.type === 'horizontal' ? new Point({ x: this.width, y: this.pos(d) }) : new Point({ x: this.pos(d), y: this.height })
+      return this.type === 'horizontal' ? new Point({ x: this.length, y: this.scale(d) }) : new Point({ x: this.scale(d), y: this.length })
     }
   },
   components: { LineShape, Group }

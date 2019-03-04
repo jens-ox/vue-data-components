@@ -4,9 +4,8 @@
     :left="left"
   >
     <Group
-      v-if="series"
       v-for="(s, i) in series"
-      :key="`vx-bar-stack-${i}`"
+      :key="`vdc-bar-stack-${i}`"
     >
       <Bar
         v-for="(d, ii) in s"

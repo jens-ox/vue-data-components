@@ -1,159 +1,49 @@
 <template>
   <svg :width="width" :height="height">
-    <group class="graph-outer">
 
-      <!-- y axis -->
-      <axis v-if="!yHideAxis"
-        :orientation="yRight ? 'right' : 'left'"
-        :top="margin.top"
-        :left="margin.left"
-        :scale="yScale"
-        :hideZero="yHideZero"
-        :ticks="{
-          count: yTicks || yTickCount,
-          label: {
-            dx: '-0.25em'
-          }
-        }"
-        :label="{
-          text: yLabel,
-          offset: yLabelOffset
-        }"
-      />
+    <!-- grid -->
+    <grid v-if="!grid.hide" v-bind="_grid" />
 
-      <!-- two options for x axis -->
-      <axis v-if="!xHideAxis"
-        :orientation="xTop ? 'top' : 'bottom'"
-        :top="height - margin.bottom"
-        :left="margin.left"
-        :scale="xScale"
-        :ticks="{
-          count: xTicks || xTickCount,
-          rotate: 45,
-          label: {
-            dx: '0.75em',
-            dy: '0.25em'
-          }
-        }"
-        :label="{
-          text: xLabel,
-          offset: 35
-        }"
-      />
-    </group>
+    <!-- y axis -->
+    <axis v-if="!yAxis.hide" v-bind="_yAxis" />
+
+    <!-- x axis -->
+    <axis v-if="!xAxis.hide" v-bind="_xAxis" />
+
+    <!-- inner graph -->
     <group class="graph-inner" :top="margin.top" :left="margin.left">
-
-      <!-- grid -->
-      <grid v-if="!hideGrid"
-        :xScale="xScale"
-        :yScale="yScale"
-        :width="innerWidth"
-        :height="innerHeight"
-        :lineStyle="{
-          stroke: 'grey',
-          strokeDasharray: '5,5'
-        }"
-        :numTicksRows="yTicks || yTickCount"
-        :numTicksColumns="xTicks || xTickCount"
-      />
-
-      <slot></slot>
+      <slot />
     </group>
   </svg>
 </template>
 <script>
+import deepmerge from 'deepmerge'
 import { Group } from '../group'
 import { Grid } from '../grid'
 import { Axis } from '../axis'
 
 export default {
   props: {
-    width: {
-      type: Number,
-      required: true
-    },
-    height: {
-      type: Number,
-      required: true
-    },
+    // scaling
+    xScale: { type: Function, required: true },
+    yScale: { type: Function, required: true },
+
+    // dimensions
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
     margin: {
       type: Object,
       default: () => {
-        return {
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0
-        }
+        return { top: 0, left: 0, right: 0, bottom: 0 }
       }
     },
-    hideGrid: {
-      type: Boolean,
-      default: false
-    },
-    hideLinesY: {
-      type: Boolean,
-      default: false
-    },
-    hideLinesX: {
-      type: Boolean,
-      default: false
-    },
-    xHideAxis: {
-      type: Boolean,
-      default: false
-    },
-    yHideAxis: {
-      type: Boolean,
-      default: false
-    },
-    xScale: Function,
-    yScale: Function,
-    xTicks: Number,
-    yTicks: Number,
-    xLabel: {
-      type: String,
-      default: 'X'
-    },
-    yLabel: {
-      type: String,
-      default: 'Y'
-    },
-    xTop: {
-      type: Boolean,
-      default: false
-    },
-    yRight: {
-      type: Boolean,
-      default: false
-    },
-    xHideZero: {
-      type: Boolean,
-      default: false
-    },
-    yHideZero: {
-      type: Boolean,
-      default: false
-    },
-    xLabelOffset: {
-      type: Number,
-      default: 40
-    },
-    yLabelOffset: {
-      type: Number,
-      default: 30
-    }
+
+    // components
+    grid: { type: Object, default: () => ({}) },
+    xAxis: { type: Object, default: () => ({}) },
+    yAxis: { type: Object, default: () => ({}) }
   },
   computed: {
-
-    // dimensions
-    innerWidth () {
-      return this.width - this.margin.left - this.margin.right
-    },
-    innerHeight () {
-      return this.height - this.margin.top - this.margin.bottom
-    },
-
     // ticks
     yTickCount () {
       if (this.height <= 300) return 3
@@ -164,6 +54,51 @@ export default {
       if (this.width <= 300) return 2
       if (this.width > 300 && this.width <= 400) return 5
       return 10
+    },
+
+    // grid
+    _grid () {
+      return deepmerge({
+        hide: false,
+        xScale: this.xScale,
+        yScale: this.yScale,
+        width: this.width - this.margin.left - this.margin.right,
+        height: this.height - this.margin.bottom - this.margin.top,
+        top: this.margin.top,
+        left: this.margin.left,
+        linesHorizontal: {
+          tickCount: this._yAxis.ticks.count
+        },
+        linesVertical: {
+          tickCount: this._xAxis.ticks.count
+        }
+      }, this.grid)
+    },
+
+    // x axis
+    _xAxis () {
+      return deepmerge({
+        orientation: 'bottom',
+        top: this.height - this.margin.bottom,
+        left: this.margin.left,
+        scale: this.xScale,
+        ticks: {
+          count: this.xTickCount
+        }
+      }, this.xAxis)
+    },
+
+    // y axis
+    _yAxis () {
+      return deepmerge({
+        orientation: 'left',
+        top: this.margin.top,
+        left: this.margin.left,
+        scale: this.yScale,
+        ticks: {
+          count: this.yTickCount
+        }
+      }, this.yAxis)
     }
   },
   components: {

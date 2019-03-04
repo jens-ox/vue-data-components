@@ -5,8 +5,14 @@
   />
 </template>
 <script>
+import deepmerge from 'deepmerge'
 import { line } from 'd3-shape'
 import { curveLinear } from '../../curve'
+
+const defaultStyle = {
+  stroke: 'black',
+  strokeWidth: 1
+}
 
 export default {
   props: {
@@ -21,7 +27,7 @@ export default {
     },
     pathStyle: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     },
     curve: {
       type: Function,
@@ -29,6 +35,9 @@ export default {
     }
   },
   computed: {
+    _style () {
+      return deepmerge(defaultStyle, this.pathStyle)
+    },
     path () {
       const path = line()
         .x(d => this.xScale(this.x(d)))

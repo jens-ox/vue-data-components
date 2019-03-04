@@ -43,17 +43,17 @@ export default {
     },
     pathStyle: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     },
     activeStyle: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     },
     isActive: Boolean,
     isInactive: Boolean,
     inactiveStyle: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     },
     curve: {
       type: Function,

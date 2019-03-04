@@ -5,12 +5,18 @@
     :y1="from.y"
     :x2="to.x"
     :y2="to.y"
-    :style="lineStyle"
+    :style="_style"
     :transform="transform"
   />
 </template>
 <script>
+import deepmerge from 'deepmerge'
 import { AbstractPoint as Point } from '../../point'
+
+const defaultStyle = {
+  stroke: 'black',
+  strokeWidth: 1
+}
 
 export default {
   props: {
@@ -24,12 +30,14 @@ export default {
     },
     lineStyle: {
       type: Object,
-      default: () => ({
-        stroke: 'black',
-        strokeWidth: 1
-      })
+      default: () => ({})
     },
     transform: { type: String, default: '' }
+  },
+  computed: {
+    _style () {
+      return deepmerge(defaultStyle, this.lineStyle)
+    }
   }
 }
 </script>
