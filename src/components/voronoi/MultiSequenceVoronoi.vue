@@ -73,7 +73,7 @@ export default {
   methods: {
     getOffset (e, i = 0) {
       const { x, y } = e.target.getBoundingClientRect()
-      const result = this.proxyDelaunay.find(e.x - x, e.y - y)
+      const result = this.proxyDelaunay.find(e.x - x, e.y - y, i)
       return (result !== -1) ? result : this.getOffset(e, i + 1)
     },
     voronoiClickHandler (e) {
