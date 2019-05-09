@@ -7,10 +7,12 @@
     :height="height"
     :rx="rx"
     :ry="ry"
-    :style="[rectStyle]"
+    :style="_barStyle"
   />
 </template>
 <script>
+import deepmerge from 'deepmerge'
+
 export default {
   props: {
     x: {
@@ -37,9 +39,20 @@ export default {
       type: Number,
       default: 0
     },
-    rectStyle: {
+    barStyle: {
       type: Object,
-      default: () => {}
+      default: () => ({})
+    }
+  },
+  computed: {
+    _barStyle() {
+      return deepmerge(
+        {
+          fill: 'rgba(0,0,0,0.2)',
+          stroke: 'black'
+        },
+        this.barStyle
+      )
     }
   }
 }
