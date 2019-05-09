@@ -5,10 +5,13 @@ module.exports = {
     displayAllHeaders: true,
     nav: [
       { text: 'Components', link: '/components/' },
+      { text: 'Helpers', link: '/helpers/' },
+      { text: 'Examples', link: '/examples' },
       { text: 'GitHub', link: 'https://github.com/jens-ox/vue-data-components' }
     ],
     sidebar: {
-      '/components/': ['', 'group', 'grid', 'axis', 'text', 'shape']
+      '/components/': ['', 'group', 'grid', 'axis', 'text', 'shape'],
+      '/helpers/': ['', 'curve']
     }
   }
 }
