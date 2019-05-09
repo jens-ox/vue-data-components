@@ -1,9 +1,11 @@
 <template>
   <div>
     <cartesian-graph
-      :width="width" :height="height"
+      :width="width"
+      :height="height"
       :margin="margin"
-      :xScale="xScale" :yScale="yScale"
+      :xScale="xScale"
+      :yScale="yScale"
       :grid="{
         linesVertical: {
           hide: true
@@ -17,8 +19,8 @@
         ticks: {
           label: {
             rotate: 45,
-            width: 50,
-            dy: -10
+            y: 5,
+            width: 50
           }
         }
       }"
@@ -56,25 +58,25 @@ export default {
     width: Number,
     height: Number
   },
-  data () {
+  data() {
     return {
       margin: { top: 10, left: 70, bottom: 100, right: 10 }
     }
   },
   computed: {
     // data
-    data () {
+    data() {
       return letterFrequency.slice(20)
     },
     // scales
-    xScale () {
+    xScale() {
       return scaleBand({
         rangeRound: [0, this.innerWidth],
         domain: this.data.map(this.x),
         padding: 0.4
       })
     },
-    yScale () {
+    yScale() {
       return scaleLinear({
         range: [this.innerHeight, 0],
         domain: [0, Math.max(...this.data.map(this.y))]
@@ -82,17 +84,25 @@ export default {
     },
 
     // dimensions
-    innerWidth () { return this.width - this.margin.left - this.margin.right },
-    innerHeight () { return this.height - this.margin.top - this.margin.bottom }
+    innerWidth() {
+      return this.width - this.margin.left - this.margin.right
+    },
+    innerHeight() {
+      return this.height - this.margin.top - this.margin.bottom
+    }
   },
   methods: {
-
     // accessors
-    x (d) { return d.letter + ' blasd laknsd asd' },
-    y (d) { return d.frequency }
+    x(d) {
+      return d.letter + ' blasd laknsd asd'
+    },
+    y(d) {
+      return d.frequency
+    }
   },
   components: {
-    CartesianGraph, Bar
+    CartesianGraph,
+    Bar
   }
 }
 </script>
