@@ -6,7 +6,7 @@ Please note that this library is in early development.
 
 ## Documentation
 
-Will be done soon™
+[Here](https://condescending-bhaskara-14e935.netlify.com)
 
 ## Development setup
 
