@@ -9,8 +9,18 @@
       :gradientTransform="rotate ? `rotate(${rotate})` : transform"
     >
       <slot />
-      <stop :offset="fromOffset" :stop-color="from" :stop-opacity="fromOpacity" v-if="!$slots.default" />
-      <stop :offset="toOffset" :stop-color="to" :stop-opacity="toOpacity" v-if="!$slots.default" />
+      <stop
+        :offset="fromOffset"
+        :stop-color="from"
+        :stop-opacity="fromOpacity"
+        v-if="!$slots.default"
+      />
+      <stop
+        :offset="toOffset"
+        :stop-color="to"
+        :stop-opacity="toOpacity"
+        v-if="!$slots.default"
+      />
     </linearGradient>
   </defs>
 </template>
@@ -29,7 +39,7 @@ export default {
     },
     x2: {
       type: String,
-      default: '0'
+      default: '1'
     },
     y1: {
       type: String,
@@ -56,11 +66,7 @@ export default {
       default: 1
     },
     rotate: Object,
-    transform: String,
-    vertical: {
-      type: Boolean,
-      default: true
-    }
+    transform: String
   }
 }
 </script>
