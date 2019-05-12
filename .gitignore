@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+# vuepress build files
+.vuepress/dist
+
 # lock files are not needed here
 yarn.lock
 
