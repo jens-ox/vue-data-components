@@ -16,7 +16,7 @@
 
 **Example**
 
-<svg :width="300" :height="200" style="margin: 0 auto">
+<svg :width="300" :height="100" style="margin: 0 auto">
   <line-shape
     :from="startPoint"
     :to="endPoint"
@@ -25,6 +25,36 @@
     }"
   ></line-shape>
 </svg>
+
+```vue
+<svg :width="300" :height="100">
+  <line-shape
+    :from="startPoint"
+    :to="endPoint"
+    :lineStyle="{
+      stroke: 'black'
+    }"
+  ></line-shape>
+</svg>
+
+<script>
+import { LineShape, AbstractPoint as Point } from 'vue-data-components'
+
+export default {
+  computed: {
+    startPoint() {
+      return new Point({ x: 10, y: 10 })
+    },
+    endPoint() {
+      return new Point({ x: 40, y: 50 })
+    }
+  },
+  components: {
+    LineShape
+  }
+}
+</script>
+```
 
 <script>
   import { LineShape } from '../../src/components/shape'
