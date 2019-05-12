@@ -10,7 +10,15 @@ module.exports = {
       { text: 'GitHub', link: 'https://github.com/jens-ox/vue-data-components' }
     ],
     sidebar: {
-      '/components/': ['', 'group', 'grid', 'axis', 'text', 'shape'],
+      '/components/': [
+        '',
+        'group',
+        'grid',
+        'axis',
+        'text',
+        'shape',
+        'gradient'
+      ],
       '/helpers/': ['', 'curve']
     }
   }
