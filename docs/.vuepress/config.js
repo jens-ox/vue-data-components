@@ -17,7 +17,8 @@ module.exports = {
         'axis',
         'text',
         'shape',
-        'gradient'
+        'gradient',
+        'graph'
       ],
       '/helpers/': ['', 'curve']
     }
