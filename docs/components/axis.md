@@ -33,6 +33,10 @@
         dy: -5
       }
     }"
+    :label="{
+      text: 'Test',
+      y: 20
+    }"
   ></axis>
 </svg>
 
@@ -48,6 +52,10 @@
           dx: 5,
           dy: -5
         }
+      }"
+      :label="{
+        text: 'Test',
+        y: 7
       }"
     ></axis>
   </svg>
