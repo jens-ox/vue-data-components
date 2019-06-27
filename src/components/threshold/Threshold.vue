@@ -2,10 +2,10 @@
   <g :class="`vdc-threshold ${className}`">
     <AreaShape :curve="curve" :data="data" :x="x" :y1="y1" :xScale="xScale" :yScale="yScale">
       <g slot="path" slot-scope="{scope:path}">
-        <ClipPathElement useID="threshold-clip-below">
+        <ClipPathElement :useID="`threshold-clip-below-${_uid}`">
           <path :d="path.y0(clipBelowTo)(data)" />
         </ClipPathElement>
-        <ClipPathElement useID="threshold-clip-above">
+        <ClipPathElement :useID="`threshold-clip-above-${_uid}`">
           <path :d="path.y0(clipAboveTo)(data)" />
         </ClipPathElement>
       </g>
@@ -18,7 +18,7 @@
       :y1="y1"
       :xScale="xScale"
       :yScale="yScale"
-      clip-path="url(#threshold-clip-below)"
+      :clip-path="`url(#threshold-clip-below-${_uid})`"
       :pathStyle="belowAreaStyle"
     />
     <AreaShape
@@ -29,7 +29,7 @@
       :y1="y1"
       :xScale="xScale"
       :yScale="yScale"
-      clip-path="url(#threshold-clip-above)"
+      :clip-path="`url(#threshold-clip-above-${_uid})`"
       :pathStyle="aboveAreaStyle"
     />
   </g>
