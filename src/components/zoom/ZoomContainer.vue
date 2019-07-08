@@ -1,5 +1,6 @@
 <template>
   <g
+    :id="`zoom-container-${_uid}`"
     class="noselect"
     :width="width"
     :height="height"
@@ -64,12 +65,15 @@ export default {
       mouseCurrentX: null,
       mouseCurrentY: null,
       customDomainX: null,
-      customDomainY: null
+      customDomainY: null,
+      zoomBoundsRect: {
+        x: 0,
+        y: 0
+      }
     }
   },
   methods: {
     resetZoom () {
-      console.log('resetting zoom')
       this.mouseOriginX = null
       this.mouseOriginY = null
       this.mouseCurrentX = null
@@ -80,15 +84,15 @@ export default {
     },
     rectZoom (event) {
       const { x, y } = event.target.getBoundingClientRect()
+      this.zoomBoundsRect.x = x
+      this.zoomBoundsRect.y = y
       this.mouseOriginX = event.x - x
       this.mouseOriginY = event.y - y
     },
     rectCreate (event) {
-      console.log('rectcreate')
       if (!this.mouseOriginX || !this.mouseOriginY) return
-      const { x, y } = event.target.getBoundingClientRect()
-      this.mouseCurrentX = event.x - x
-      this.mouseCurrentY = event.y - y
+      this.mouseCurrentX = event.x - this.zoomBoundsRect.x
+      this.mouseCurrentY = event.y - this.zoomBoundsRect.y
     },
     rectStop () {
       // exit case 1: no current mouse position set
