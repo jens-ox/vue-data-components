@@ -1,37 +1,20 @@
 <template>
   <div>
-    <svg
+    <cartesian-graph
       :width="width"
       :height="height"
+      :margin="margin"
+      :x-scale="xScale"
+      :y-scale="yScale"
     >
-      <Group
-        :left="margin.left"
-        :top="margin.top"
+      <zoom-container
+        :width="xMax"
+        :height="yMax"
+        :x-scale="xScale"
+        :y-scale="yScale"
+        @newDomains="setDomains"
+        @reset="resetDomains"
       >
-        <Grid
-          :x-scale="xScale"
-          :y-scale="yScale"
-          :width="xMax"
-          :height="yMax"
-        />
-        <Axis
-          orientation="bottom"
-          :top="yMax"
-          :scale="xScale"
-          :num-ticks="width > 520 ? 10 : 5"
-        />
-        <Axis
-          orientation="left"
-          :scale="yScale"
-        />
-        <text
-          :x="-70"
-          :y="15"
-          transform="rotate(-90)"
-          :font-size="10"
-        >
-          Temperature (°F)
-        </text>
         <threshold
           :data="data"
           :x="date"
@@ -41,7 +24,6 @@
           :y-scale="yScale"
           :clip-above-to="0"
           :clip-below-to="yMax"
-          :curve="curveBasis"
           :below-area-style="{
             strokeWidth: 0,
             fill: 'red',
@@ -55,11 +37,11 @@
         />
         <LinePath
           :data="data"
-          :curve="curveBasis"
           :x="date"
           :y="sf"
           :x-scale="xScale"
           :y-scale="yScale"
+          :curve="curveBasis"
           :path-style="{
             stroke: '#000',
             strokeWidth: 1.5,
@@ -70,34 +52,33 @@
         />
         <LinePath
           :data="data"
-          :curve="curveBasis"
           :x="date"
           :y="sf2"
           :x-scale="xScale"
           :y-scale="yScale"
+          :curve="curveBasis"
           :path-style="{
             stroke: '#000',
             strokeWidth: 1.5,
             fill: 'none'
           }"
         />
-      </Group>
-    </svg>
+      </zoom-container>
+    </cartesian-graph>
   </div>
 </template>
 <script>
-import { Group } from '../group'
 import { curveBasis } from '../curve'
+import { CartesianGraph } from '../graph'
 import { LinePath } from '../shape'
 import { Threshold } from '../threshold'
 import { scaleTime, scaleLinear } from '../scale'
-import { Axis } from '../axis'
-import { Grid } from '../grid'
 import { cityTemperature } from '../mock-data'
+import { ZoomContainer } from '../zoom'
 import { timeParse } from 'd3-time-format'
 export default {
   components: {
-    Group, LinePath, Threshold, Axis, Grid
+    LinePath, Threshold, CartesianGraph, ZoomContainer
   },
   props: {
     width: {
@@ -115,8 +96,10 @@ export default {
   },
   data () {
     return {
-      curveBasis,
-      data: cityTemperature
+      customDomainX: null,
+      customDomainY: null,
+      data: cityTemperature,
+      curveBasis
     }
   },
   computed: {
@@ -124,25 +107,42 @@ export default {
     // bounds
     xMax () { return this.width - this.margin.left - this.margin.right },
     yMax () { return this.height - this.margin.top - this.margin.bottom },
+
+    // domains
+    xDomain () {
+      return this.customDomainX || [Math.min(...this.data.map(this.date)), Math.max(...this.data.map(this.date))]
+    },
+    yDomain () {
+      return this.customDomainY || [
+        Math.min(...this.data.map(d => Math.min(this.ny(d), this.sf(d)))),
+        Math.max(...this.data.map(d => Math.max(this.ny(d), this.sf(d))))
+      ]
+    },
+
     // scales
     xScale () {
       return scaleTime({
         range: [0, this.xMax],
-        domain: [Math.min(...this.data.map(this.date)), Math.max(...this.data.map(this.date))]
+        domain: this.xDomain
       })
     },
     yScale () {
       return scaleLinear({
         range: [this.yMax, 0],
-        domain: [
-          Math.min(...this.data.map(d => Math.min(this.ny(d), this.sf(d)))),
-          Math.max(...this.data.map(d => Math.max(this.ny(d), this.sf(d))))
-        ],
+        domain: this.yDomain,
         nice: true
       })
     }
   },
   methods: {
+    setDomains (domains) {
+      this.customDomainX = domains.x
+      this.customDomainY = domains.y
+    },
+    resetDomains () {
+      this.customDomainX = null
+      this.customDomainY = null
+    },
     // accessors
     date (d) { return this.parseDate(d.date) },
     ny (d) { return d['New York'] },

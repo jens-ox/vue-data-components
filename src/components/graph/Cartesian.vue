@@ -27,6 +27,8 @@
       class="graph-inner"
       :top="margin.top"
       :left="margin.left"
+      :width="width - margin.left - margin.right"
+      :height="height - margin.top - margin.bottom"
     >
       <slot />
     </group>

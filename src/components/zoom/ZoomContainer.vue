@@ -13,6 +13,15 @@
     @mousemove="rectCreate($event)"
     @mouseup="rectStop"
   >
+    <rect
+      :x="0"
+      :y="0"
+      :width="width"
+      :height="height"
+      :style="{
+        fill: 'transparent'
+      }"
+    />
     <clipPath :id="_uid">
       <rect
         :x="0"
