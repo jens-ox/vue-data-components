@@ -1,7 +1,15 @@
 <template>
-  <svg :width="size" :height="size">
+  <svg
+    :width="size"
+    :height="size"
+  >
     <Group>
-      <rect :width="size" :height="size" :fill="fill" :style="setStyle"></rect>
+      <rect
+        :width="size"
+        :height="size"
+        :fill="fill"
+        :style="setStyle"
+      />
     </Group>
   </svg>
 </template>
@@ -9,8 +17,12 @@
 import { Group } from '../../group'
 
 export default {
+  components: { Group },
   props: {
-    fill: String,
+    fill: {
+      type: String,
+      default: '#cccccc'
+    },
     width: {
       type: Number,
       default: 0
@@ -19,13 +31,13 @@ export default {
       type: Number,
       default: 0
     },
-    setStyle: Object
+    setStyle: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     size () { return Math.max(this.width, this.height) }
-  },
-  components: {
-    Group
   }
 }
 </script>

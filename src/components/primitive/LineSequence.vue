@@ -1,9 +1,11 @@
 <template>
   <line-path
     :data="sequence"
-    :x="x" :y="y"
-    :xScale="xScale" :yScale="yScale"
-    :pathStyle="computedStyle"
+    :x="x"
+    :y="y"
+    :x-scale="xScale"
+    :y-scale="yScale"
+    :path-style="computedStyle"
     :curve="curve"
   />
 </template>
@@ -11,15 +13,7 @@
 import { LinePath } from '../shape'
 import { curveLinear } from '../curve'
 export default {
-  data () {
-    return {
-      defaultStyle: {
-        fill: 'none',
-        stroke: 'rgba(0,0,0,0.5)',
-        strokeWidth: 1
-      }
-    }
-  },
+  components: { LinePath },
   props: {
     xScale: {
       type: Function,
@@ -60,6 +54,15 @@ export default {
       default: curveLinear
     }
   },
+  data () {
+    return {
+      defaultStyle: {
+        fill: 'none',
+        stroke: 'rgba(0,0,0,0.5)',
+        strokeWidth: 1
+      }
+    }
+  },
   computed: {
     computedStyle () {
       let style = { ...this.defaultStyle, ...this.pathStyle }
@@ -71,9 +74,6 @@ export default {
       }
       return style
     }
-  },
-  components: {
-    LinePath
   }
 }
 </script>

@@ -28,7 +28,7 @@
           xFormatted: format(x(d.data)),
           data: d.data
         }"
-        v-on:mousemove.native="movementHandler(s.key, d[1], d.data, $event)"
+        @mousemove.native="movementHandler(s.key, d[1], d.data, $event)"
       />
     </Group>
   </Group>
@@ -39,6 +39,7 @@ import Bar from './Bar'
 import { stack as d3stack } from 'd3-shape'
 
 export default {
+  components: { Group, Bar },
   props: {
     data: {
       type: Array,
@@ -64,9 +65,14 @@ export default {
       type: Array,
       required: true
     },
-    top: Number,
-    left: Number,
-    height: Number
+    top: {
+      type: Number,
+      default: 0
+    },
+    left: {
+      type: Number,
+      default: 0
+    }
   },
   computed: {
     series () { return d3stack().keys(this.keys)(this.data) },
@@ -89,9 +95,6 @@ export default {
         })
       }
     }
-  },
-  components: {
-    Group, Bar
   }
 }
 </script>

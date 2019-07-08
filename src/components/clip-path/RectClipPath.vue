@@ -1,12 +1,23 @@
 <template>
-  <ClipPathElement :useID="useID">
-    <rect :x="x" :y="y" :width="width" :height="height" v-bind="restProps" />
+  <ClipPathElement
+    :use-id="useID"
+  >
+    <rect
+      :x="x"
+      :y="y"
+      :width="width"
+      :height="height"
+      v-bind="restProps"
+    />
   </ClipPathElement>
 </template>
 <script>
 import ClipPathElement from './ClipPath'
 
 export default {
+  components: {
+    ClipPathElement
+  },
   props: {
     x: {
       type: Number,
@@ -28,10 +39,10 @@ export default {
       type: String,
       required: true
     },
-    restProps: Object
-  },
-  components: {
-    ClipPathElement
+    restProps: {
+      type: Object,
+      default: () => ({})
+    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div
     :class="`vx-tooltip-portal ${className}`"
-    v-bind:style="computedStyle"
+    :style="computedStyle"
     v-bind="restProps"
   >
     <slot />
@@ -10,13 +10,22 @@
 <script>
 export default {
   props: {
-    left: Number,
-    top: Number,
+    left: {
+      type: Number,
+      default: 0
+    },
+    top: {
+      type: Number,
+      default: 0
+    },
     className: {
       type: String,
       default: ''
     },
-    restProps: Object
+    restProps: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     computedStyle: function () {

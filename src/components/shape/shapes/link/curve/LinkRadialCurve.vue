@@ -10,8 +10,14 @@ import { path as d3Path } from 'd3-path'
 
 export default {
   props: {
-    data: Array,
-    path: Function,
+    data: {
+      type: Array,
+      required: true
+    },
+    path: {
+      type: Function,
+      required: true
+    },
     x: {
       type: Function,
       default: d => d.x

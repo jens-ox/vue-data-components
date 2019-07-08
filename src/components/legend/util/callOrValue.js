@@ -1,6 +1,6 @@
-export default function callOrValue(maybeFn, data) {
+export default function callOrValue (maybeFn, data) {
   if (typeof maybeFn === 'function') {
-    return maybeFn(data);
+    return maybeFn(data)
   }
-  return maybeFn;
+  return maybeFn
 }

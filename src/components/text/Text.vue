@@ -1,8 +1,6 @@
 <template>
   <g :transform="`translate(${x},${y}),rotate(${rotate})`">
     <text
-      :dx="dx"
-      :dy="dy"
       v-wrapper="{
         text,
         width,
@@ -12,6 +10,8 @@
         paddingLeft,
         paddingRight
       }"
+      :dx="dx"
+      :dy="dy"
       :style="_textStyle"
     />
   </g>
@@ -21,6 +21,7 @@ import wrapper from './textWrap'
 import deepmerge from 'deepmerge'
 
 export default {
+  directives: { wrapper },
   props: {
     text: { type: String, required: true },
     x: { type: Number, default: 0 },
@@ -48,7 +49,7 @@ export default {
     paddingRight: { type: Number, default: 0 }
   },
   computed: {
-    _textStyle() {
+    _textStyle () {
       return deepmerge(
         {
           fill: 'black'
@@ -56,9 +57,6 @@ export default {
         this.textStyle
       )
     }
-  },
-  directives: {
-    wrapper
   }
 }
 </script>

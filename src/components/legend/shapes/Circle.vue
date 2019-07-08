@@ -1,7 +1,17 @@
 <template>
-  <svg :width="size" :height="size">
-    <Group :top="radius" :left="radius">
-      <circle :r="radius" :fill="fill" :style="setStyle" />
+  <svg
+    :width="size"
+    :height="size"
+  >
+    <Group
+      :top="radius"
+      :left="radius"
+    >
+      <circle
+        :r="radius"
+        :fill="fill"
+        :style="setStyle"
+      />
     </Group>
   </svg>
 </template>
@@ -9,8 +19,12 @@
 import { Group } from '../../group'
 
 export default {
+  components: { Group },
   props: {
-    fill: String,
+    fill: {
+      type: String,
+      default: '#cccccc'
+    },
     width: {
       type: Number,
       default: 0
@@ -19,14 +33,14 @@ export default {
       type: Number,
       default: 0
     },
-    setStyle: Object
+    setStyle: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     size () { return Math.max(this.width, this.height) },
     radius () { return this.size / 2 }
-  },
-  components: {
-    Group
   }
 }
 </script>

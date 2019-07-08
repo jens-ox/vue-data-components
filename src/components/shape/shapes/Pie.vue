@@ -1,21 +1,25 @@
 <template>
-  <Group :top="top" :left="left">
-      <g v-for="(arc, i) in arcs"
-        :key="`pie-arc-${i}`"
+  <Group
+    :top="top"
+    :left="left"
+  >
+    <g
+      v-for="(arcInstance, i) in arcs"
+      :key="`pie-arc-${i}`"
+    >
+      <path v-bind="renderFunctionArguments.generatePathProps(arcInstance, i)" />
+      <text
+        v-if="renderFunctionArguments.generateCentroid(arcInstance)"
+        fill="white"
+        text-anchor="middle"
+        :x="labelX(arcInstance)"
+        :y="labelY(arcInstance)"
+        dy=".33em"
+        :font-size="9"
       >
-        <path v-bind="renderFunctionArguments.generatePathProps(arc, i)" />
-        <text
-          v-if="renderFunctionArguments.generateCentroid(arc)"
-          fill="white"
-          text-anchor="middle"
-          :x="labelX(arc)"
-          :y="labelY(arc)"
-          dy=".33em"
-          :font-size="9"
-        >
-          {{ labelText(arc) }}
-        </text>
-      </g>
+        {{ labelText(arcInstance) }}
+      </text>
+    </g>
   </Group>
 </template>
 <script>
@@ -23,6 +27,7 @@ import { Group } from '../../group'
 import { arc as d3Arc, pie as d3Pie } from 'd3-shape'
 
 export default {
+  components: { Group },
   props: {
     top: {
       type: Number,
@@ -32,21 +37,42 @@ export default {
       type: Number,
       default: 0
     },
-    data: Array,
-    centroid: Function,
+    data: {
+      type: Array,
+      required: true
+    },
+    centroid: {
+      type: Function,
+      default: null
+    },
     innerRadius: {
       type: Number,
       default: 0
     },
-    outerRadius: Number,
-    cornerRadius: Number,
+    outerRadius: {
+      type: Number,
+      default: null
+    },
+    cornerRadius: {
+      type: Number,
+      default: null
+    },
     startAngle: {
       type: Number,
       default: 0
     },
-    endAngle: Number,
-    padAngle: Number,
-    padRadius: Number,
+    endAngle: {
+      type: Number,
+      default: null
+    },
+    padAngle: {
+      type: Number,
+      default: null
+    },
+    padRadius: {
+      type: Number,
+      default: null
+    },
     fill: {
       type: String,
       default: 'white'
@@ -55,9 +81,18 @@ export default {
       type: Function,
       default: () => 1
     },
-    pieSort: Function,
-    pieSortValues: Function,
-    pieValue: Function
+    pieSort: {
+      type: Function,
+      default: null
+    },
+    pieSortValues: {
+      type: Function,
+      default: null
+    },
+    pieValue: {
+      type: Function,
+      default: null
+    }
   },
   computed: {
     path () {
@@ -108,9 +143,6 @@ export default {
     labelText (arc) {
       return this.renderFunctionArguments.generateCentroid(arc).text
     }
-  },
-  components: {
-    Group
   }
 }
 </script>

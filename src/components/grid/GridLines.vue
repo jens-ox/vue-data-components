@@ -1,10 +1,14 @@
 <template>
-  <Group :top="top" :left="left">
-    <LineShape v-for="(d, i) in ticks"
+  <Group
+    :top="top"
+    :left="left"
+  >
+    <LineShape
+      v-for="(d, i) in ticks"
       :key="`${type}-line-${d}-${i}`"
       :from="fromPoint(d)"
       :to="toPoint(d)"
-      :lineStyle="_lineStyle"
+      :line-style="_lineStyle"
     />
   </Group>
 </template>
@@ -15,6 +19,7 @@ import { Group } from '../group'
 import { AbstractPoint as Point } from '../point'
 
 export default {
+  components: { LineShape, Group },
   props: {
     type: {
       type: String,
@@ -47,7 +52,6 @@ export default {
     toPoint (d) {
       return this.type === 'horizontal' ? new Point({ x: this.length, y: this.scale(d) }) : new Point({ x: this.scale(d), y: this.length })
     }
-  },
-  components: { LineShape, Group }
+  }
 }
 </script>

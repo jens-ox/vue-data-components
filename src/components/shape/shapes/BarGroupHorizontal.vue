@@ -1,21 +1,29 @@
 <template>
-  <Group :top="top" :left="left">
-    <Group v-if="data" v-for="(d, i) in data"
-      :key="`bar-group-${i}-${y0(d)}`" :top="y0Scale(y0(d))">
-        <Bar v-if="keys" v-for="(key, i) in keys"
-          :key="`bar-group-bar-${i}-${d[key]}-${key}`"
-          :x="0"
-          :y="y1Scale(key)"
-          :width="width - xScale(d[key])"
-          :height="y1Scale.bandwidth()"
-          :fill="zScale(key)"
-          :data="{
-            key,
-            value: d[key],
-            y: format(y0(d)),
-            data: d
-          }"
-        />
+  <Group
+    v-if="data && keys"
+    :top="top"
+    :left="left"
+  >
+    <Group
+      v-for="(d, i) in data"
+      :key="`bar-group-${i}-${y0(d)}`"
+      :top="y0Scale(y0(d))"
+    >
+      <Bar
+        v-for="(key, j) in keys"
+        :key="`bar-group-bar-${i}-${d[key]}-${j}`"
+        :x="0"
+        :y="y1Scale(key)"
+        :width="width - xScale(d[key])"
+        :height="y1Scale.bandwidth()"
+        :fill="zScale(key)"
+        :data="{
+          key,
+          value: d[key],
+          y: format(y0(d)),
+          data: d
+        }"
+      />
     </Group>
   </Group>
 </template>
@@ -24,6 +32,7 @@ import { Group } from '../../group'
 import Bar from './Bar'
 
 export default {
+  components: { Group, Bar },
   props: {
     data: {
       type: Array,
@@ -57,14 +66,17 @@ export default {
       type: Number,
       required: true
     },
-    top: Number,
-    left: Number
+    top: {
+      type: Number,
+      default: 0
+    },
+    left: {
+      type: Number,
+      default: 0
+    }
   },
   computed: {
     format () { return this.y0Scale.tickFormat ? this.y0Scale.tickFormat() : d => d }
-  },
-  components: {
-    Group, Bar
   }
 }
 </script>

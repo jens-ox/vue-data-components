@@ -26,8 +26,14 @@ export default {
       type: Function,
       default: d => d.target
     },
-    data: Array,
-    path: Function
+    data: {
+      type: Array,
+      required: true
+    },
+    path: {
+      type: Function,
+      required: true
+    }
   },
   computed: {
     pathRadialDiagonal () {

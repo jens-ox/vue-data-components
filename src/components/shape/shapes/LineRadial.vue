@@ -18,10 +18,19 @@ import { curveBasisOpen } from '../../curve'
 
 export default {
   props: {
-    angle: Function,
-    radius: Function,
+    angle: {
+      type: Function,
+      default: null
+    },
+    radius: {
+      type: Function,
+      default: null
+    },
     defined: Boolean,
-    data: Array,
+    data: {
+      type: Array,
+      required: true
+    },
     fill: {
       type: String,
       default: 'none'

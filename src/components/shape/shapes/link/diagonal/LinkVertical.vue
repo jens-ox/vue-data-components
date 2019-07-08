@@ -10,7 +10,14 @@ import { linkVertical } from 'd3-shape'
 
 export default {
   props: {
-    data: Object,
+    data: {
+      type: Array,
+      required: true
+    },
+    path: {
+      type: Function,
+      required: true
+    },
     x: {
       type: Function,
       default (d) { return d.x }
@@ -26,8 +33,7 @@ export default {
     target: {
       type: Function,
       default (d) { return d.target }
-    },
-    path: Function
+    }
   },
   computed: {
     pathVerticalDiagonal () {

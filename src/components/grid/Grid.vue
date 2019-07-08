@@ -1,5 +1,9 @@
 <template>
-  <Group class="vdc-grid" :top="top" :left="left">
+  <Group
+    class="vdc-grid"
+    :top="top"
+    :left="left"
+  >
     <grid-lines
       v-if="!_linesHorizontal.hide"
       v-bind="_linesHorizontal"
@@ -16,6 +20,9 @@ import GridLines from './GridLines'
 import { Group } from '../group'
 
 export default {
+  components: {
+    Group, GridLines
+  },
   props: {
     // scaling
     xScale: { type: Function, required: true },
@@ -51,9 +58,6 @@ export default {
         lineStyle: this.lineStyle
       }, this.linesVertical)
     }
-  },
-  components: {
-    Group, GridLines
   }
 }
 </script>

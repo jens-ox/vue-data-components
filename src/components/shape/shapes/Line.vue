@@ -28,7 +28,7 @@ export default {
     }
   },
   computed: {
-    _style() {
+    _style () {
       return deepmerge(
         {
           stroke: 'black',

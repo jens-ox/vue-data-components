@@ -1,12 +1,19 @@
 <template>
-  <Group :top="top" :left="left">
-
+  <Group
+    :top="top"
+    :left="left"
+  >
     <!-- ticks -->
     <Group
       v-for="(val, index) in _ticks.values"
       :key="`vdc-tick-${val}-${index}`"
     >
-      <LineShape v-if="!_ticks.hide" :from="tickFromPoint(val)" :to="tickToPoint(val)" :lineStyle="_ticks.lineStyle" />
+      <LineShape
+        v-if="!_ticks.hide"
+        :from="tickFromPoint(val)"
+        :to="tickToPoint(val)"
+        :line-style="_ticks.lineStyle"
+      />
       <g :transform="tickLabelTransform(val)">
         <text-component
           v-bind="_ticks.label"
@@ -20,7 +27,7 @@
       v-if="!_line.hide"
       :from="axisFromPoint"
       :to="axisToPoint"
-      :lineStyle="_line.lineStyle"
+      :line-style="_line.lineStyle"
     />
 
     <!-- axis label -->
@@ -39,6 +46,9 @@ import { TextComponent } from '../text'
 import deepmerge from 'deepmerge'
 
 export default {
+  components: {
+    LineShape, Group, TextComponent
+  },
   props: {
     top: { type: Number, default: 0 },
     left: { type: Number, default: 0 },
@@ -183,9 +193,6 @@ export default {
       const tickLabelY = this.tickToPoint(val).y
       return `translate(${tickLabelX}, ${tickLabelY})`
     }
-  },
-  components: {
-    LineShape, Group, TextComponent
   }
 }
 </script>

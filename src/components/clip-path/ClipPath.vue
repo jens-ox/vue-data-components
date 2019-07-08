@@ -1,6 +1,9 @@
 <template>
   <defs>
-    <clipPath :id="useID" v-bind="restProps">
+    <clipPath
+      :id="useID"
+      v-bind="restProps"
+    >
       <slot />
     </clipPath>
   </defs>
@@ -12,7 +15,10 @@ export default {
       type: String,
       required: true
     },
-    restProps: Object
+    restProps: {
+      type: Object,
+      default: () => ({})
+    }
   }
 }
 </script>

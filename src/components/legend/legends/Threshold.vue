@@ -2,8 +2,8 @@
   <Legend
     :scale="scale"
     :domain="computedDomain"
-    :labelFormat="labelFormat"
-    :labelTransform="computedLabelTransform(labelDelimiter, labelLower, labelUpper)"
+    :label-format="labelFormat"
+    :label-transform="computedLabelTransform(labelDelimiter, labelLower, labelUpper)"
     v-bind="restProps"
   />
 </template>
@@ -11,13 +11,20 @@
 import Legend from './Legend'
 
 export default {
+  components: { Legend },
   props: {
     scale: {
       type: Function,
       required: true
     },
-    domain: Array,
-    labelTransform: Function,
+    domain: {
+      type: Array,
+      required: true
+    },
+    labelTransform: {
+      type: Function,
+      default: null
+    },
     labelFormat: {
       type: Function,
       default: d => d
@@ -34,7 +41,10 @@ export default {
       type: String,
       default: 'More than '
     },
-    restProps: Object
+    restProps: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     computedDomain () {
@@ -52,7 +62,7 @@ export default {
     },
     defaultTransform ({ labelDelimiter, labelLower, labelUpper }) {
       return ({ scale, labelFormat }) => {
-        function format(labelFormat, value, i) {
+        function format (labelFormat, value, i) {
           const formattedValue = labelFormat(value, i)
           if (formattedValue === 0) return '0'
           return formattedValue || ''
@@ -85,9 +95,6 @@ export default {
         }
       }
     }
-  },
-  components: {
-    Legend
   }
 }
 </script>

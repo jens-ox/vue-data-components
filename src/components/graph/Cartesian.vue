@@ -1,17 +1,33 @@
 <template>
-  <svg :width="width" :height="height">
+  <svg
+    :width="width"
+    :height="height"
+  >
 
     <!-- grid -->
-    <grid v-if="!grid.hide" v-bind="_grid" />
+    <grid
+      v-if="!grid.hide"
+      v-bind="_grid"
+    />
 
     <!-- y axis -->
-    <axis v-if="!yAxis.hide" v-bind="_yAxis" />
+    <axis
+      v-if="!yAxis.hide"
+      v-bind="_yAxis"
+    />
 
     <!-- x axis -->
-    <axis v-if="!xAxis.hide" v-bind="_xAxis" />
+    <axis
+      v-if="!xAxis.hide"
+      v-bind="_xAxis"
+    />
 
     <!-- inner graph -->
-    <group class="graph-inner" :top="margin.top" :left="margin.left">
+    <group
+      class="graph-inner"
+      :top="margin.top"
+      :left="margin.left"
+    >
       <slot />
     </group>
   </svg>
@@ -23,6 +39,9 @@ import { Grid } from '../grid'
 import { Axis } from '../axis'
 
 export default {
+  components: {
+    Group, Grid, Axis
+  },
   props: {
     // scaling
     xScale: { type: Function, required: true },
@@ -100,9 +119,6 @@ export default {
         }
       }, this.yAxis)
     }
-  },
-  components: {
-    Group, Grid, Axis
   }
 }
 </script>

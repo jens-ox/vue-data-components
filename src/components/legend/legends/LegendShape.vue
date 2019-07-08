@@ -14,8 +14,8 @@
       :height="height"
       :fill="fill(label)"
       :size="size(label)"
-      :setStyle="shapeStyle(label)"
-    ></component>
+      :set-style="shapeStyle(label)"
+    />
   </div>
 </template>
 <script>
@@ -25,18 +25,33 @@ import ShapeCircle from '../shapes/Circle'
 import valueOrIdentity from '../util/valueOrIdentity'
 
 export default {
+  components: {
+    ShapeRect, ShapeCircle
+  },
   props: {
-    width: Number,
-    height: Number,
-    margin: String,
-    label: Object,
+    width: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    },
+    margin: {
+      type: String,
+      required: true
+    },
+    label: {
+      type: Object,
+      required: true
+    },
     fill: {
       type: Function,
       default: valueOrIdentity
     },
     size: {
       type: Function,
-      default: () => {},
+      default: () => {}
     },
     shape: {
       type: String,
@@ -46,9 +61,6 @@ export default {
       type: Function,
       default: () => undefined
     }
-  },
-  components: {
-    ShapeRect, ShapeCircle
   }
 }
 </script>

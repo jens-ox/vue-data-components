@@ -4,14 +4,14 @@
       :width="width"
       :height="height"
       :margin="margin"
-      :xScale="xScale"
-      :yScale="yScale"
+      :x-scale="xScale"
+      :y-scale="yScale"
       :grid="{
         linesVertical: {
           hide: true
         }
       }"
-      :xAxis="{
+      :x-axis="{
         label: {
           text: 'Time',
           offset: 60
@@ -24,7 +24,7 @@
           }
         }
       }"
-      :yAxis="{
+      :y-axis="{
         label: {
           text: '€ per sec',
           offset: 30
@@ -54,29 +54,39 @@ import { letterFrequency } from '../mock-data'
 import { scaleBand, scaleLinear } from '../scale'
 
 export default {
-  props: {
-    width: Number,
-    height: Number
+  components: {
+    CartesianGraph,
+    Bar
   },
-  data() {
+  props: {
+    width: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    }
+  },
+  data () {
     return {
       margin: { top: 10, left: 70, bottom: 100, right: 10 }
     }
   },
   computed: {
     // data
-    data() {
+    data () {
       return letterFrequency.slice(20)
     },
     // scales
-    xScale() {
+    xScale () {
       return scaleBand({
         rangeRound: [0, this.innerWidth],
         domain: this.data.map(this.x),
         padding: 0.4
       })
     },
-    yScale() {
+    yScale () {
       return scaleLinear({
         range: [this.innerHeight, 0],
         domain: [0, Math.max(...this.data.map(this.y))]
@@ -84,25 +94,21 @@ export default {
     },
 
     // dimensions
-    innerWidth() {
+    innerWidth () {
       return this.width - this.margin.left - this.margin.right
     },
-    innerHeight() {
+    innerHeight () {
       return this.height - this.margin.top - this.margin.bottom
     }
   },
   methods: {
     // accessors
-    x(d) {
-      return d.letter + ' blasd laknsd asd'
+    x (d) {
+      return d.letter
     },
-    y(d) {
+    y (d) {
       return d.frequency
     }
-  },
-  components: {
-    CartesianGraph,
-    Bar
   }
 }
 </script>

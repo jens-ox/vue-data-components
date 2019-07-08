@@ -11,6 +11,24 @@
 import additionalProps from '../util/additionalProps'
 
 export default {
+  props: {
+    flexDirection: {
+      type: String,
+      default: null
+    },
+    margin: {
+      type: String,
+      default: null
+    },
+    label: {
+      type: Object,
+      required: true
+    },
+    restProps: {
+      type: Object,
+      default: () => { return {} }
+    }
+  },
   data () {
     return {
       additionalProps
@@ -24,18 +42,6 @@ export default {
         flexDirection: this.flexDirection,
         margin: this.margin
       }
-    }
-  },
-  props: {
-    flexDirection: String,
-    margin: String,
-    label: {
-      type: Object,
-      required: true
-    },
-    restProps: {
-      type: Object,
-      default: () => { return {} }
     }
   }
 }

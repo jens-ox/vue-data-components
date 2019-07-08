@@ -2,14 +2,17 @@
   <g :transform="`translate(${left}, ${top})`">
     <path
       v-for="(series, i) in seriesData"
-      v-bind:key="`area-stack-${i}-${series.key || ''}`"
+      :key="`area-stack-${i}-${series.key || ''}`"
       class="`vdc-area-stack"
       :d="path(series)"
     />
     <g
-      v-if="!!glyph" class="vdc-area-stack-glyphs"
+      v-if="!!glyph"
+      class="vdc-area-stack-glyphs"
       :transform="`translate(${left}, ${top})`"
-    >{{ data.map(glyph) }}</g>
+    >
+      {{ data.map(glyph) }}
+    </g>
   </g>
 </template>
 <script>
@@ -25,16 +28,43 @@ export default {
       type: Number,
       default: 0
     },
-    keys: Array,
-    data: Array,
-    curve: Function,
+    keys: {
+      type: Array,
+      required: true
+    },
+    data: {
+      type: Array,
+      required: true
+    },
+    curve: {
+      type: Function,
+      required: true
+    },
     defined: Boolean,
-    x: Function,
-    x0: Function,
-    x1: Function,
-    y0: Function,
-    y1: Function,
-    glyph: Array,
+    x: {
+      type: Function,
+      required: true
+    },
+    x0: {
+      type: Function,
+      required: true
+    },
+    x1: {
+      type: Function,
+      required: true
+    },
+    y0: {
+      type: Function,
+      required: true
+    },
+    y1: {
+      type: Function,
+      required: true
+    },
+    glyph: {
+      type: Array,
+      required: true
+    },
     reverse: {
       type: Boolean,
       default: false

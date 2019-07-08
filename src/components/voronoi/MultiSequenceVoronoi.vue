@@ -5,7 +5,8 @@
     :height="height"
     @mousemove="voronoiMoveHandler"
     @click="voronoiClickHandler"
-    @mouseleave="outHandler" />
+    @mouseleave="outHandler"
+  />
 </template>
 <script>
 import { Delaunay } from 'd3-delaunay'
@@ -36,20 +37,10 @@ export default {
     recompute: { type: Number, default: 0 },
     recomputeVoronoi: { type: Boolean, default: true }
   },
-  watch: {
-    recompute () {
-      if (this.recomputeVoronoi) return
-      this.computedDelaunay = this.delaunay
-    }
-  },
   data () {
     return {
       computedDelaunay: {}
     }
-  },
-  beforeMount () {
-    if (this.recomputeVoronoi) return
-    this.computedDelaunay = this.delaunay
   },
   computed: {
     proxyDelaunay () {
@@ -69,6 +60,16 @@ export default {
     delaunay () {
       return Delaunay.from(this.data, d => this.xScale(this.x(d)), d => this.yScale(this.y(d)))
     }
+  },
+  watch: {
+    recompute () {
+      if (this.recomputeVoronoi) return
+      this.computedDelaunay = this.delaunay
+    }
+  },
+  beforeMount () {
+    if (this.recomputeVoronoi) return
+    this.computedDelaunay = this.delaunay
   },
   methods: {
     getOffset (e, i = 0) {

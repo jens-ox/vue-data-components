@@ -2,8 +2,8 @@
   <Legend
     :scale="scale"
     :domain="domain"
-    :labelFormat="labelFormat"
-    :labelTransform="labelTransform"
+    :label-format="labelFormat"
+    :label-transform="labelTransform"
     :direction="direction"
     v-bind="restProps"
   />
@@ -13,13 +13,20 @@ import Legend from './Legend'
 import valueOrIdentity from '../util/valueOrIdentity'
 
 export default {
-  props: {  
+  components: { Legend },
+  props: {
     scale: {
       type: Function,
       required: true
     },
-    direction: String,
-    domain: Array,
+    direction: {
+      type: String,
+      default: ''
+    },
+    domain: {
+      type: Array,
+      required: true
+    },
     labelTransform: {
       type: Function,
       default: ({ scale, labelFormat }) => {
@@ -37,10 +44,10 @@ export default {
       type: Function,
       default: valueOrIdentity
     },
-    restProps: Object
-  },
-  components: {
-    Legend
+    restProps: {
+      type: Object,
+      default: () => ({})
+    }
   }
 }
 </script>

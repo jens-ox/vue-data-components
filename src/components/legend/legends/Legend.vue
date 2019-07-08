@@ -17,9 +17,13 @@
         :label="label"
         :fill="fill"
         :size="size"
-        :shapeStyle="shapeStyle"
+        :shape-style="shapeStyle"
       />
-      <LegendLabel :label="label.text" :margin="labelMargin" :align="labelAlign" />
+      <LegendLabel
+        :label="label.text"
+        :margin="labelMargin"
+        :align="labelAlign"
+      />
     </LegendItem>
   </div>
 </template>
@@ -30,6 +34,9 @@ import LegendShape from './LegendShape'
 import valueOrIdentity from '../util/valueOrIdentity'
 
 export default {
+  components: {
+    LegendItem, LegendLabel, LegendShape
+  },
   props: {
     className: {
       type: String,
@@ -43,7 +50,10 @@ export default {
         }
       }
     },
-    shapeStyle: Object,
+    shapeStyle: {
+      type: Object,
+      default: () => ({})
+    },
     scale: {
       type: Function,
       required: true
@@ -78,7 +88,7 @@ export default {
     },
     itemDirection: {
       type: String,
-      defalut: 'row'
+      default: 'row'
     },
     fill: {
       type: Function,
@@ -105,7 +115,10 @@ export default {
         }
       }
     },
-    restProps: Object
+    restProps: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     computedDomain () { return this.domain || this.scale.domain() },
@@ -117,15 +130,12 @@ export default {
     }
   },
   methods: {
-    labels (scale, labelFormat) { 
-      return this.computedDomain.map(this.labelTransform({ 
+    labels (scale, labelFormat) {
+      return this.computedDomain.map(this.labelTransform({
         scale,
         labelFormat
       }))
     }
-  },
-  components: {
-    LegendItem, LegendLabel, LegendShape
   }
 }
 </script>

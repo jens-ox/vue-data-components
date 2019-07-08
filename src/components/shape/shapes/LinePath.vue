@@ -16,11 +16,26 @@ const defaultStyle = {
 
 export default {
   props: {
-    xScale: Function,
-    yScale: Function,
-    data: Array,
-    x: Function,
-    y: Function,
+    xScale: {
+      type: Function,
+      required: true
+    },
+    yScale: {
+      type: Function,
+      required: true
+    },
+    data: {
+      type: Array,
+      required: true
+    },
+    x: {
+      type: Function,
+      required: true
+    },
+    y: {
+      type: Function,
+      required: true
+    },
     defined: {
       type: Function,
       default: () => true

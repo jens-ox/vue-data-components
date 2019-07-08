@@ -1,30 +1,53 @@
 <template>
   <div>
-
-    <svg :width="width" :height="height">
-      <Group :left="margin.left" :top="margin.top">
-        <Grid :xScale="xScale" :yScale="yScale" :width="xMax" :height="yMax" />
-        <Axis orientation="bottom" :top="yMax" :scale="xScale" :numTicks="width > 520 ? 10 : 5" />
-        <Axis orientation="left" :scale="yScale" />
-        <text :x="-70" :y="15" transform="rotate(-90)" :font-size="10">
+    <svg
+      :width="width"
+      :height="height"
+    >
+      <Group
+        :left="margin.left"
+        :top="margin.top"
+      >
+        <Grid
+          :x-scale="xScale"
+          :y-scale="yScale"
+          :width="xMax"
+          :height="yMax"
+        />
+        <Axis
+          orientation="bottom"
+          :top="yMax"
+          :scale="xScale"
+          :num-ticks="width > 520 ? 10 : 5"
+        />
+        <Axis
+          orientation="left"
+          :scale="yScale"
+        />
+        <text
+          :x="-70"
+          :y="15"
+          transform="rotate(-90)"
+          :font-size="10"
+        >
           Temperature (°F)
         </text>
-        <Threshold
+        <threshold
           :data="data"
           :x="date"
           :y0="sf"
           :y1="sf2"
-          :xScale="xScale"
-          :yScale="yScale"
-          :clipAboveTo="0"
-          :clipBelowTo="yMax"
+          :x-scale="xScale"
+          :y-scale="yScale"
+          :clip-above-to="0"
+          :clip-below-to="yMax"
           :curve="curveBasis"
-          :belowAreaStyle="{
+          :below-area-style="{
             strokeWidth: 0,
             fill: 'red',
             fillOpacity: 0.4
           }"
-          :aboveAreaStyle="{
+          :above-area-style="{
             strokeWidth: 0,
             fill: 'green',
             fillOpacity: 0.4
@@ -35,9 +58,9 @@
           :curve="curveBasis"
           :x="date"
           :y="sf"
-          :xScale="xScale"
-          :yScale="yScale"
-          :pathStyle="{
+          :x-scale="xScale"
+          :y-scale="yScale"
+          :path-style="{
             stroke: '#000',
             strokeWidth: 1.5,
             strokeOpacity: 0.8,
@@ -50,9 +73,9 @@
           :curve="curveBasis"
           :x="date"
           :y="sf2"
-          :xScale="xScale"
-          :yScale="yScale"
-          :pathStyle="{
+          :x-scale="xScale"
+          :y-scale="yScale"
+          :path-style="{
             stroke: '#000',
             strokeWidth: 1.5,
             fill: 'none'
@@ -73,9 +96,18 @@ import { Grid } from '../grid'
 import { cityTemperature } from '../mock-data'
 import { timeParse } from 'd3-time-format'
 export default {
+  components: {
+    Group, LinePath, Threshold, Axis, Grid
+  },
   props: {
-    width: Number,
-    height: Number,
+    width: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    },
     margin: {
       type: Object,
       default: () => { return { top: 30, bottom: 30, left: 30, right: 30 } }
@@ -116,9 +148,6 @@ export default {
     ny (d) { return d['New York'] },
     sf (d) { return d['San Francisco'] },
     sf2 (d) { return d['San Francisco'] - 5 }
-  },
-  components: {
-    Group, LinePath, Threshold, Axis, Grid
   }
 }
 </script>

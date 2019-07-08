@@ -56,7 +56,7 @@ function set (el, text, config) {
   if (!config.width) return
   const plain = []
   const physLn = el.getBBox().height // physical line height
-  // convert text nodes to tspans, clear spans
+  // convert text nodes to t-spans, clear spans
   for (let i = 0; i < el.childNodes.length; i++) {
     let n = el.childNodes[i]
     if (n instanceof Text) {

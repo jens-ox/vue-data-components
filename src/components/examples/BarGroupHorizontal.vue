@@ -1,7 +1,17 @@
 <template>
   <div :style="{ position: 'relative', width: width + 'px', height: height + 'px', margin: '0 auto' }">
-    <svg :width="width" :height="height">
-      <rect :x="0" :y="0" :width="width" :height="height" fill="#eaedff" :rx="14" />
+    <svg
+      :width="width"
+      :height="height"
+    >
+      <rect
+        :x="0"
+        :y="0"
+        :width="width"
+        :height="height"
+        fill="#eaedff"
+        :rx="14"
+      />
       <Grid
         :top="margin.top"
         :left="margin.left"
@@ -23,8 +33,8 @@
         :xScale="xScale"
         :yScale="yScale"
         :zScale="zScale"
-        v-on:move="mouseMoveHandler"
-        v-on:mouseleave.native="mouseLeaveHandler"
+        @move="mouseMoveHandler"
+        @mouseleave.native="mouseLeaveHandler"
       />
       <Axis
         orientation="bottom"
@@ -50,7 +60,11 @@
         fontSize: '14px'
       }"
     >
-      <LegendOrdinal :scale="zScale" direction="row" labelMargin="0 15px 0 0" />
+      <LegendOrdinal
+        :scale="zScale"
+        direction="row"
+        label-margin="0 15px 0 0"
+      />
     </div>
 
     <Tooltip
@@ -75,7 +89,6 @@
 </template>
 <script>
 import { BarStack } from '../shape'
-import { Group } from '../group'
 import { Grid } from '../grid'
 import { Axis } from '../axis'
 import { cityTemperature } from '../mock-data'
@@ -86,9 +99,19 @@ import { LegendOrdinal } from '../legend'
 import { max } from 'd3-array'
 
 export default {
+  components: {
+    BarStack, Grid, Axis, Tooltip, LegendOrdinal
+  },
+  mixins: [withTooltip],
   props: {
-    width: Number,
-    height: Number,
+    width: {
+      type: Number,
+      required: true
+    },
+    height: {
+      type: Number,
+      required: true
+    },
     margin: {
       type: Object,
       default: () => { return { top: 10, bottom: 10, left: 10, right: 10 } }
@@ -143,6 +166,9 @@ export default {
     xMax () { return this.width - this.margin.left - this.margin.right },
     yMax () { return this.height - this.margin.top - this.margin.bottom }
   },
+  beforeMount () {
+    this.data = cityTemperature.slice(0, 12)
+  },
   methods: {
     // accessors
     x (d) { return d.date },
@@ -160,24 +186,7 @@ export default {
         tooltipTop: response.clientY,
         tooltipLeft: this.xScale(this.x(response.data)) + 0.9 * (this.xMax / this.data.length)
       })
-      /*
-      if (this.tooltipTimeout) clearTimeout(this.tooltipTimeout)
-      const top = event.clientY - this.margin.top - this.data.height
-      const left = this.xScale(this.data.x) + this.data.width + this.data.paddingInner * this.data.step / 2
-      this.showTooltip({
-        tooltipData: this.data,
-        tooltipTop: top,
-        tooltipLeft: left
-      })
-      */
     }
-  },
-  beforeMount () {
-    this.data = cityTemperature.slice(0, 12)
-  },
-  components: {
-    BarStack, Group, Grid, Axis, Tooltip, LegendOrdinal
-  },
-  mixins: [withTooltip]
+  }
 }
 </script>

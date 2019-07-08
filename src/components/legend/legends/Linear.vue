@@ -2,8 +2,8 @@
   <Legend
     :scale="scale"
     :domain="computedDomain"
-    :labelFormat="labelFormat"
-    :labelTransform="labelTransform"
+    :label-format="labelFormat"
+    :label-transform="labelTransform"
     v-bind="restProps"
   />
 </template>
@@ -11,12 +11,16 @@
 import Legend from './Legend'
 
 export default {
+  components: { Legend },
   props: {
     scale: {
       type: Function,
       required: true
     },
-    domain: Array,
+    domain: {
+      type: Array,
+      required: true
+    },
     steps: {
       type: Number,
       default: 5
@@ -36,7 +40,10 @@ export default {
         }
       }
     },
-    restProps: Object
+    restProps: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     computedDomain () { return this.domain || this.defaultDomain(this.steps, this.scale) }
@@ -52,9 +59,6 @@ export default {
         return acc
       }, [])
     }
-  },
-  components: {
-    Legend
-  }  
+  }
 }
 </script>

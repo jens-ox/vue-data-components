@@ -10,7 +10,14 @@ import { path as d3Path } from 'd3-path'
 
 export default {
   props: {
-    data: Array,
+    data: {
+      type: Array,
+      required: true
+    },
+    path: {
+      type: Function,
+      required: true
+    },
     percent: {
       type: Number,
       default: 0.2
@@ -30,8 +37,7 @@ export default {
     target: {
       type: Function,
       default: d => d.target
-    },
-    path: Function
+    }
   },
   computed: {
     pathRadialLine () {

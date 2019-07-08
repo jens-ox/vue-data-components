@@ -1,5 +1,8 @@
 <template>
-  <g class="vdc-group" :transform="transform || `translate(${left}, ${top})`">
+  <g
+    class="vdc-group"
+    :transform="transform || `translate(${left}, ${top})`"
+  >
     <slot />
   </g>
 </template>
@@ -8,7 +11,10 @@ export default {
   props: {
     top: { type: Number, default: 0 },
     left: { type: Number, default: 0 },
-    transform: String
+    transform: {
+      type: String,
+      default: null
+    }
   }
 }
 </script>

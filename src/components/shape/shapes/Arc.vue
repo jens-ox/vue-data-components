@@ -1,21 +1,55 @@
 <template>
-  <path class="vdc-arc" :d="arc(data)" :style="pathStyle" />
+  <path
+    class="vdc-arc"
+    :d="arc(data)"
+    :style="pathStyle"
+  />
 </template>
 <script>
 import { arc as d3Arc } from 'd3-shape'
 
 export default {
   props: {
-    data: Object,
-    centroid: Object,
-    innerRadius: Number,
-    outerRadius: Number,
-    cornerRadius: Number,
-    startAngle: Number,
-    endAngle: Number,
-    padAngle: Number,
-    padRadius: Number,
-    pathStyle: Object
+    data: {
+      type: Object,
+      required: true
+    },
+    centroid: {
+      type: Object,
+      default: null
+    },
+    innerRadius: {
+      type: Number,
+      default: null
+    },
+    outerRadius: {
+      type: Number,
+      default: null
+    },
+    cornerRadius: {
+      type: Number,
+      default: null
+    },
+    startAngle: {
+      type: Number,
+      default: null
+    },
+    endAngle: {
+      type: Number,
+      default: null
+    },
+    padAngle: {
+      type: Number,
+      default: null
+    },
+    padRadius: {
+      type: Number,
+      default: null
+    },
+    pathStyle: {
+      type: Object,
+      default: () => ({})
+    }
   },
   computed: {
     arc () {

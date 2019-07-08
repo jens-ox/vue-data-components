@@ -3,10 +3,10 @@
     <point
       v-for="(point, i) in points"
       :key="`point-${i}`"
-      :xPos="xScale(x(point))"
-      :yPos="yScale(y(point))"
+      :x-pos="xScale(x(point))"
+      :y-pos="yScale(y(point))"
       :r="r(point, i)"
-      :pointStyle="computedStyle(i)"
+      :point-style="computedStyle(i)"
     />
   </group>
 </template>
@@ -15,6 +15,7 @@ import { Group } from '../group'
 import Point from './Point'
 
 export default {
+  components: { Group, Point },
   props: {
     points: {
       type: Array,
@@ -48,7 +49,10 @@ export default {
       type: Boolean,
       default: false
     },
-    activePoint: Number,
+    activePoint: {
+      type: Number,
+      default: -1
+    },
     pointStyle: {
       type: Object,
       default: () => {}
@@ -94,9 +98,6 @@ export default {
       // no current interaction
       return this.pointStyle
     }
-  },
-  components: {
-    Group, Point
   }
 }
 </script>

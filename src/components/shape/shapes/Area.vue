@@ -1,6 +1,9 @@
 <template>
   <Group v-if="$scopedSlots.path">
-    <slot name="path" :scope="path" />
+    <slot
+      name="path"
+      :scope="path"
+    />
   </Group>
   <Group v-else>
     <path
@@ -15,15 +18,40 @@ import { area } from 'd3-shape'
 import { Group } from '../../group'
 
 export default {
+  components: { Group },
   props: {
-    x: Function,
-    x0: Function,
-    x1: Function,
-    y: Function,
-    y0: Function,
-    y1: Function,
-    xScale: Function,
-    yScale: Function,
+    x: {
+      type: Function,
+      default: null
+    },
+    x0: {
+      type: Function,
+      default: null
+    },
+    x1: {
+      type: Function,
+      default: null
+    },
+    y: {
+      type: Function,
+      default: null
+    },
+    y0: {
+      type: Function,
+      default: null
+    },
+    y1: {
+      type: Function,
+      default: null
+    },
+    xScale: {
+      type: Function,
+      default: null
+    },
+    yScale: {
+      type: Function,
+      default: null
+    },
     data: {
       type: Array,
       default: () => []
@@ -42,7 +70,10 @@ export default {
         }
       }
     },
-    curve: Function
+    curve: {
+      type: Function,
+      default: null
+    }
   },
   computed: {
     path () {
@@ -57,9 +88,6 @@ export default {
       if (this.curve) path.curve(this.curve)
       return path
     }
-  },
-  components: {
-    Group
   }
 }
 </script>
