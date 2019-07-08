@@ -62,6 +62,7 @@
     >
       <LegendOrdinal
         :scale="zScale"
+        :domain="keys"
         direction="row"
         label-margin="0 15px 0 0"
       />

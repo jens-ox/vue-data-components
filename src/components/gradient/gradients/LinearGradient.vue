@@ -1,7 +1,7 @@
 <template>
   <defs>
     <linearGradient
-      :id="useID"
+      :id="useId"
       :x1="x1"
       :y1="y1"
       :x2="x2"
@@ -27,7 +27,7 @@
 <script>
 export default {
   props: {
-    useID: {
+    useId: {
       type: String,
       required: true
     },

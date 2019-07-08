@@ -1,7 +1,7 @@
 <template>
   <defs>
     <radialGradient
-      :id="useID"
+      :id="useId"
       :gradient-transform="rotate ? `rotate(${rotate})` : transform"
     >
       <slot />
@@ -23,7 +23,7 @@
 <script>
 export default {
   props: {
-    useID: {
+    useId: {
       type: String,
       required: true
     },

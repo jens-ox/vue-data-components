@@ -1,5 +1,5 @@
 <template>
-  <ClipPathElement :use-id="useID">
+  <ClipPathElement :use-id="useId">
     <circle
       :cx="cx"
       :cy="cy"
@@ -16,7 +16,7 @@ export default {
     ClipPathElement
   },
   props: {
-    useID: {
+    useId: {
       type: String,
       required: true
     },

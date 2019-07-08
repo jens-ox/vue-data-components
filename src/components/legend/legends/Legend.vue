@@ -51,8 +51,8 @@ export default {
       }
     },
     shapeStyle: {
-      type: Object,
-      default: () => ({})
+      type: Function,
+      default: () => null
     },
     scale: {
       type: Function,

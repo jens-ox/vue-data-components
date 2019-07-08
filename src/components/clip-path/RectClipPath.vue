@@ -1,6 +1,6 @@
 <template>
   <ClipPathElement
-    :use-id="useID"
+    :use-id="useId"
   >
     <rect
       :x="x"
@@ -35,7 +35,7 @@ export default {
       type: Number,
       default: 1
     },
-    useID: {
+    useId: {
       type: String,
       required: true
     },

@@ -1,7 +1,7 @@
 <template>
   <defs>
     <clipPath
-      :id="useID"
+      :id="useId"
       v-bind="restProps"
     >
       <slot />
@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    useID: {
+    useId: {
       type: String,
       required: true
     },

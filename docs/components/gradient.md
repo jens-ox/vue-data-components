@@ -16,7 +16,7 @@ By default, a `from` and a `to` color is specified. If multiple colors are to be
 
 | Name        | Type   | Default    | Description                                                            |
 | :---------- | :----- | :--------- | :--------------------------------------------------------------------- |
-| useID       | String | _required_ | The ID used to reference the gradient                                  |
+| useId       | String | _required_ | The ID used to reference the gradient                                  |
 | from        | String | `null`     | Starting color of the gradient, unused if stops are manually specified |
 | to          | String | `null`     | Ending color of the gradient, unused if stops are manually specified   |
 | x1          | String | 0          | First x-coordinate of the gradient                                     |
@@ -52,13 +52,13 @@ Currently available:
 **Example**:
 
 <svg :width="300" :height="200" style="margin: 0 auto">
-  <GradientTealBlue useID="teal" />
+  <GradientTealBlue use-id="teal" />
   <rect :width="300" :height="200" fill="url(#teal)" :rx="14" />
 </svg>
 
 ```vue
 <svg :width="300" :height="200">
-  <GradientTealBlue useID="teal" />
+  <GradientTealBlue use-id="teal" />
   <rect :width="300" :height="200" fill="url(#teal)" :rx="14" />
 </svg>
 
@@ -85,7 +85,7 @@ More or less identical to [LinearGradient](#lineargradient), but radial.
 
 | Name        | Type   | Default    | Description                                                            |
 | :---------- | :----- | :--------- | :--------------------------------------------------------------------- |
-| useID       | String | _required_ | The ID used to reference the gradient                                  |
+| useId       | String | _required_ | The ID used to reference the gradient                                  |
 | from        | String | `null`     | Starting color of the gradient, unused if stops are manually specified |
 | to          | String | `null`     | Ending color of the gradient, unused if stops are manually specified   |
 | fromOffset  | String | 0%         | Offset of the starting gradient stop                                   |
@@ -98,13 +98,13 @@ More or less identical to [LinearGradient](#lineargradient), but radial.
 **Example**:
 
 <svg :width="300" :height="200" style="margin: 0 auto">
-  <RadialGradient useID="radial" from="#FCE38A" to="#F38181"  />
+  <RadialGradient use-id="radial" from="#FCE38A" to="#F38181"  />
   <rect :width="300" :height="200" fill="url(#radial)" :rx="14" />
 </svg>
 
 ```vue
 <svg :width="300" :height="200">
-  <RadialGradient useID="radial" from="#FCE38A" to="#F38181"  />
+  <RadialGradient use-id="radial" from="#FCE38A" to="#F38181"  />
   <rect :width="300" :height="200" fill="url(#radial)" :rx="14" />
 </svg>
 

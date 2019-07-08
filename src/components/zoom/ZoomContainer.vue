@@ -84,6 +84,7 @@ export default {
       this.mouseOriginY = event.y - y
     },
     rectCreate (event) {
+      console.log('rectcreate')
       if (!this.mouseOriginX || !this.mouseOriginY) return
       const { x, y } = event.target.getBoundingClientRect()
       this.mouseCurrentX = event.x - x
