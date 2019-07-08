@@ -1,17 +1,17 @@
 {
   "name": "vue-data-components",
   "version": "0.4.14",
-  "main": "src/lib.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit",
     "build-library": "vue-cli-service build --target lib --name vue-dc ./src/lib.js",
+    "docs:build": "vuepress build docs",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit"
   },
+  "main": "src/lib.js",
   "files": [
     "src/*"
   ],
@@ -26,11 +26,16 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",
     "@vue/cli-plugin-e2e-cypress": "^3.0.4",
+    "@vue/cli-plugin-eslint": "^3.9.2",
     "@vue/cli-plugin-unit-mocha": "^3.0.4",
     "@vue/cli-service": "^3.0.4",
+    "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "chai": "^4.1.2",
+    "eslint": "^6.0.1",
+    "eslint-plugin-vue": "^5.2.3",
     "vue-template-compiler": "^2.5.17",
     "vuepress": "^0.14.4"
   }
