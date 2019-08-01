@@ -6,9 +6,7 @@
     :height="height"
     :x="0"
     :y="0"
-    @mouseover="zoomActive = true"
     @mousedown="rectZoom($event)"
-    @mouseout="zoomActive = false"
     @dblclick="resetZoom"
     @mousemove="rectCreate($event)"
     @mouseup="rectStop"
@@ -68,7 +66,6 @@ export default {
   },
   data () {
     return {
-      zoomActive: false,
       mouseOriginX: null,
       mouseOriginY: null,
       mouseCurrentX: null,
@@ -92,6 +89,7 @@ export default {
       this.$emit('reset')
     },
     rectZoom (event) {
+      this.$emit('zooming')
       const { x, y } = event.target.getBoundingClientRect()
       this.zoomBoundsRect.x = x
       this.zoomBoundsRect.y = y
@@ -104,6 +102,7 @@ export default {
       this.mouseCurrentY = event.y - this.zoomBoundsRect.y
     },
     rectStop () {
+      this.$emit('zoomed')
       // exit case 1: no current mouse position set
       // exit case 2: zoom window has no dimensions
       if (this.mouseCurrentX && this.mouseCurrentY) {
