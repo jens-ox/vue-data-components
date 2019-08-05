@@ -10,6 +10,7 @@
     @dblclick="resetZoom"
     @mousemove="rectCreate($event)"
     @mouseup="rectStop"
+    @mouseleave="rectStop"
   >
     <rect
       :x="0"
@@ -106,16 +107,21 @@ export default {
       // exit case 1: no current mouse position set
       // exit case 2: zoom window has no dimensions
       if (this.mouseCurrentX && this.mouseCurrentY) {
-        this.$emit('newDomains', {
-          x: [
-            this.xScale.invert(Math.min(this.mouseOriginX, this.mouseCurrentX)),
-            this.xScale.invert(Math.max(this.mouseOriginX, this.mouseCurrentX))
-          ],
-          y: [
-            this.yScale.invert(Math.max(this.mouseOriginY, this.mouseCurrentY)),
-            this.yScale.invert(Math.min(this.mouseOriginY, this.mouseCurrentY))
-          ]
-        })
+        // make sure that zoom area is bigger than 4px in both width and height
+        const diffWidth = Math.abs(this.mouseOriginX - this.mouseCurrentX)
+        const diffHeight = Math.abs(this.mouseOriginY - this.mouseCurrentY)
+        if (diffWidth >= 4 && diffHeight >= 4) {
+          this.$emit('newDomains', {
+            x: [
+              this.xScale.invert(Math.min(this.mouseOriginX, this.mouseCurrentX)),
+              this.xScale.invert(Math.max(this.mouseOriginX, this.mouseCurrentX))
+            ],
+            y: [
+              this.yScale.invert(Math.max(this.mouseOriginY, this.mouseCurrentY)),
+              this.yScale.invert(Math.min(this.mouseOriginY, this.mouseCurrentY))
+            ]
+          })
+        }
       }
       this.mouseOriginX = null
       this.mouseOriginY = null
